@@ -35,7 +35,7 @@ with open('./data/time_data.csv') as csvfile2:
 
 
     # Represent the lists of sorted trucks that are in order of efficiency and referenced in the following functions
-    first_truck[]
+    first_truck_index[]
     first_truck_indices[]
     # #
     second_truck[]

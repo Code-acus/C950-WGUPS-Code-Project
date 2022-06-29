@@ -13,8 +13,8 @@ with open('./data/distance_data.csv') as csvfile1:
     first_truck_delivery: List[List[Union[str, Any]]] = []
     # Second Truck Delivery
     second_truck_delivery = []
-    # Last Truck Delivery
-    last_truck_delivery = []
+    # Third Truck Delivery
+    third_truck_delivery = []
 
     # Inserts the data into the hash table with key/value pairs should run in O(n)
     for row in read_in_csv:
@@ -51,9 +51,9 @@ with open('./data/distance_data.csv') as csvfile1:
 
         # Check remaining packages
         if value not in first_truck_delivery and value not in second_truck_delivery and value \
-                not in last_truck_delivery:
+                not in third_truck_delivery:
             second_truck_delivery.append(value) if len(second_truck_delivery) < len(
-                first_truck_delivery) else last_truck_delivery.append(value)
+                first_truck_delivery) else third_truck_delivery.append(value)
 
         # Inserts the data into the hash table
         hash_map.insert(package_id, value)
@@ -67,8 +67,8 @@ with open('./data/distance_data.csv') as csvfile1:
         return first_truck_delivery
 
     # Get packages on the delivery route - should run in O(1)
-    def get_last_delivery():
-        return last_truck_delivery
+    def get_third_delivery():
+        return third_truck_delivery
 
     # Get full list of packages - should run in O(1)
     def get_hash_map():
