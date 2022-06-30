@@ -73,3 +73,15 @@ with open('./data/distance_data.csv') as csvfile1:
     # Get full list of packages - should run in O(1)
     def get_hash_map():
         return hash_map
+
+
+def get_second_truck_delivery():
+    return None
+
+
+def get_third_truck_delivery():
+    return None
+
+
+def get_hash_table():
+    return None

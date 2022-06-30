@@ -67,3 +67,9 @@ class HashTable:
                     self.map[key_hash].remove(i)
                     return True
         return False
+
+
+class HashTableCreate:
+    def __init__(self, key, package):
+        self.key = key
+        self.package = package
