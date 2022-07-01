@@ -1,6 +1,6 @@
 from typing import List, Union, Any
 
-from hash_map import HashTable
+from hashMap import HashTable
 import csv
 
 # read in the csv files and create a hash table
