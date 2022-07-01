@@ -5,7 +5,7 @@ from package import get_hash_map
 
 
 def main():
-    global convert_first_time, convert_second_time, first_time, second_time
+    # global convert_first_time, convert_second_time, first_time, second_time
     print("----------------------------------------------")
     print("THE WGUPS - PARCEL AND PACKAGE ROUTING SYSTEM.")
     print("----------------------------------------------")
