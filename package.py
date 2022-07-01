@@ -3,9 +3,9 @@ from typing import List, Union, Any
 from hash_map import HashTable
 import csv
 
-# read in the csv file
-with open('./data/distance_data.csv') as csvfile1:
-    read_in_csv = list(csv.reader(csvfile1, delimiter=','))
+# read in the csv files and create a hash table
+with open('./data/distance_data.csv') as csv_file_1:
+    read_in_csv = list(csv.reader(csv_file_1, delimiter=','))
 
     # Creates an instance of the HashTable class
     hash_map = HashTable(len(read_in_csv))
@@ -14,9 +14,9 @@ with open('./data/distance_data.csv') as csvfile1:
     # Second Truck Delivery
     second_truck_delivery = []
     # Third Truck Delivery
-    third_truck_delivery = []
+    final_truck_delivery = []
 
-    # Inserts the data into the hash table with key/value pairs should run in O(n)
+    # Inserts the data into the hash table with key/value pairs runs in O(n) time
     for row in read_in_csv:
         package_id = row[0]
         address = row[1]
@@ -51,37 +51,36 @@ with open('./data/distance_data.csv') as csvfile1:
 
         # Check remaining packages
         if value not in first_truck_delivery and value not in second_truck_delivery and value \
-                not in third_truck_delivery:
+                not in final_truck_delivery:
             second_truck_delivery.append(value) if len(second_truck_delivery) < len(
-                first_truck_delivery) else third_truck_delivery.append(value)
+                first_truck_delivery) else final_truck_delivery.append(value)
 
         # Inserts the data into the hash table
         hash_map.insert(package_id, value)
 
-    # Get packages on the delivery route - should run in O(1)
-    def get_first_delivery():
-        return first_truck_delivery
 
-    # Get packages on the delivery route - should run in O(1)
-    def get_second_delivery():
-        return first_truck_delivery
-
-    # Get packages on the delivery route - should run in O(1)
-    def get_third_delivery():
-        return third_truck_delivery
-
-    # Get full list of packages - should run in O(1)
-    def get_hash_map():
-        return hash_map
+# Get packages on the delivery route runs in O(1) time
+def get_first_truck_delivery():
+    return first_truck_delivery
 
 
+# Get packages on the delivery route runs in O(1) time
 def get_second_truck_delivery():
-    return None
+    return first_truck_delivery
 
 
-def get_third_truck_delivery():
-    return None
+# Get packages on the delivery route runs in O(1) time
+def get_final_truck_delivery():
+    return final_truck_delivery
 
 
+# Get full list of packages runs in O(1) time
+def get_hash_map():
+    return hash_map
+
+
+# Get the current package distance runs in O(1) time
 def get_hash_table():
     return None
+
+

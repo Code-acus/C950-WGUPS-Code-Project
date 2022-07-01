@@ -47,8 +47,8 @@ with open('./data/distance_name_data.csv') as csv_file_2:
     first_delivery_truck_indices = []
     second_delivery_truck = []
     second_delivery_truck_indices = []
-    third_delivery_truck = []
-    third_delivery_truck_indices = []
+    final_delivery_truck = []
+    final_delivery_truck_indices = []
 
     # I have an algorithm that uses a greedy plus shortest path.
     # Because the algorithm uses a kind of recursion to determine
@@ -108,8 +108,8 @@ with open('./data/distance_name_data.csv') as csv_file_2:
                     curr_location = location
                     get_shortest_path(_list, 2, curr_location)
                 elif num == 3:
-                    third_delivery_truck.append(i)
-                    third_delivery_truck_indices.append(i[1])
+                    final_delivery_truck.append(i)
+                    final_delivery_truck_indices.append(i[1])
                     _list.pop(_list.index(i))
                     curr_location = location
                     get_shortest_path(_list, 3, curr_location)
@@ -117,7 +117,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
     # Insert 0 for the first index of each index list
     first_delivery_truck_indices.insert(0, '0')
     second_delivery_truck_indices.insert(0, '0')
-    third_delivery_truck_indices.insert(0, '0')
+    final_delivery_truck_indices.insert(0, '0')
 
     # The following are all helper functions to return a desired value -> O(1)
     def first_delivery_truck_index():
@@ -132,9 +132,9 @@ with open('./data/distance_name_data.csv') as csv_file_2:
     def second_delivery_truck_list():
         return second_delivery_truck
 
-    def third_delivery_truck_index():
-        return third_delivery_truck_indices
+    def final_delivery_truck_index():
+        return final_delivery_truck_indices
 
-    def third_delivery_truck_list():
-        return third_delivery_truck
+    def final_delivery_truck_list():
+        return final_delivery_truck
 
