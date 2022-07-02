@@ -1,5 +1,6 @@
-# Hash Table Class
+##
 
+# Hash Table Class
 class HashTable:
     def __init__(self, capacity):
         self.map = None

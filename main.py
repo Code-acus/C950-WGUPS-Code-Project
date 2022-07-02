@@ -1,3 +1,5 @@
+##
+
 # Harrison Rogers, Student ID: 00632898
 from datetime import datetime
 
@@ -9,7 +11,6 @@ def main():
     print("----------------------------------------------")
     print("THE WGUPS - PARCEL AND PACKAGE ROUTING SYSTEM.")
     print("----------------------------------------------")
-    # FIXME: Add additional code for the interface return message here
 
     user_input = input("Please select from the options below:"
                        "1. Get status for all packages for a particular time frame"
