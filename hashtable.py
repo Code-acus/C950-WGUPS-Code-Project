@@ -2,12 +2,6 @@
 
 # Hash Table Class
 class HashTable:
-    def __init__(self, capacity):
-        self.map = None
-        self.capacity = capacity
-        self.table = []
-        for value in range(capacity):
-            self.table.append([])
 
     # Create a hash key which should run in O(1)
     # Explain with comments what the "with" does and why you are using this

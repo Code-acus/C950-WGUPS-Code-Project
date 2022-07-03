@@ -3,6 +3,45 @@
 import distance
 import package
 
+class Truck:
+    def __init__(self, truck_id, truck_capacity, truck_speed):
+        self.truck_id = truck_id
+        self.truck_capacity = truck_capacity
+        self.truck_speed = truck_speed
+        self.packages = []
+        self.packages_indices = []
+        self.packages_indices.append('0')
+        self.packages_indices_2 = []
+        self.packages_indices_2.append('0')
+        self.packages_indices_3 = []
+        self.packages_indices_3.append('0')
+        self.packages_indices_4 = []
+        self.packages_indices_4.append('0')
+        self.packages_indices_5 = []
+        self.packages_indices_5.append('0')
+        self.packages_indices_6 = []
+        self.packages_indices_6.append('0')
+        self.packages_indices_7 = []
+        self.packages_indices_7.append('0')
+        self.packages_indices_8 = []
+        self.packages_indices_8.append('0')
+        self.packages_indices_9 = []
+        self.packages_indices_9.append('0')
+        self.packages_indices_10 = []
+        self.packages_indices_10.append('0')
+        self.packages_indices_11 = []
+        self.packages_indices_11.append('0')
+        self.packages_indices_12 = []
+        self.packages_indices_12.append('0')
+        self.packages_indices_13 = []
+        self.packages_indices_13.append('0')
+        self.packages_indices_14 = []
+        self.packages_indices_14.append('0')
+        self.packages_indices_15 = []
+        self.packages_indices_15.append('0')
+        self.packages_indices_16 = []
+        self.packages_indices_16.append('0')
+        self.packages_ind
 # Empty lists created to store the addresses of the trucks
 first_delivery = []
 second_delivery = []

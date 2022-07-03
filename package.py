@@ -1,8 +1,24 @@
 ##
 
 from typing import List, Union, Any
-from hashMap import HashTable
+from hashtable import HashTable
 import csv
+
+
+class Package:
+    def __init__(self, package_id, package_weight, package_destination):
+        self.package_id = package_id
+        self.package_weight = package_weight
+        self.package_destination = package_destination
+
+    def get_package_id(self):
+        return self.package_id
+
+    def get_package_weight(self):
+        return self.package_weight
+
+    def get_package_destination(self):
+        return self.package_destination
 
 # read in the csv files and create a hash table
 with open('./data/distance_data.csv') as csv_file_1:

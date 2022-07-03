@@ -1,12 +1,12 @@
 ##
 
 # Harrison Rogers, Student ID: 00632898
-from datetime import datetime
 
+from datetime import datetime
 from package import get_hash_map
 
 
-def main():
+class Main:
     # global convert_first_time, convert_second_time, first_time, second_time
     print("----------------------------------------------")
     print("THE WGUPS - PARCEL AND PACKAGE ROUTING SYSTEM.")

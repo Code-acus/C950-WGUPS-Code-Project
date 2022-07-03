@@ -3,6 +3,53 @@
 import csv
 import datetime
 
+class GreedyShortestPathAlgorithm:
+    def __init__(self):
+        self.hash_map = {}
+        self.package_list = []
+        self.package_list_2 = []
+        self.package_list_3 = []
+        self.package_list_4 = []
+        self.package_list_5 = []
+        self.package_list_6 = []
+        self.package_list_7 = []
+        self.package_list_8 = []
+        self.package_list_9 = []
+        self.package_list_10 = []
+        self.package_list_11 = []
+        self.package_list_12 = []
+        self.package_list_13 = []
+        self.package_list_14 = []
+        self.package_list_15 = []
+        self.package_list_16 = []
+        self.package_list_17 = []
+        self.package_list_18 = []
+        self.package_list_19 = []
+        self.package_list_20 = []
+        self.package_list_21 = []
+        self.package_list_22 = []
+        self.package_list_23 = []
+        self.package_list_24 = []
+        self.package_list_25 = []
+        self.package_list_26 = []
+        self.package_list_27 = []
+        self.package_list_28 = []
+        self.package_list_29 = []
+        self.package_list_30 = []
+        self.package_list_31 = []
+        self.package_list_32 = []
+        self.package_list_33 = []
+        self.package_list_34 = []
+        self.package_list_35 = []
+        self.package_list_36 = []
+        self.package_list_37 = []
+        self.package_list_38 = []
+        self.package_list_39 = []
+        self.package_list_40 = []
+        self.package_list_41 = []
+        self.package_list_42 = []
+        self.package_list_43 = []
+        self.package_list_
 # Read the CSV files for the packages and the delivery status
 with open('./data/distance_data.csv') as csv_file_1:
     distance_csv = list(csv.reader(csv_file_1, delimiter=','))
