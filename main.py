@@ -8,6 +8,7 @@ from package import get_hash_map
 
 class Main:
     # global convert_first_time, convert_second_time, first_time, second_time
+    # Displays interface for users to select options for packages and trucks
     print("----------------------------------------------")
     print("THE WGUPS - PARCEL AND PACKAGE ROUTING SYSTEM.")
     print("----------------------------------------------")
