@@ -1,5 +1,3 @@
-#
-
 # Harrison Rogers, Student ID: 00632898
 
 from datetime import datetime

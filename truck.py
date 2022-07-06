@@ -1,4 +1,3 @@
-#
 
 import distance
 import package
