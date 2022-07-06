@@ -1,4 +1,4 @@
-##
+#
 
 # Hash Table Class
 class HashTable:
