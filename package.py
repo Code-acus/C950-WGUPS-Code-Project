@@ -21,11 +21,15 @@ class Package:
         return self.package_destination
 
 # read in the csv files and create a hash table
-with open('./data/distance_data.csv') as csv_file_1:
-    read_in_csv = list(csv.reader(csv_file_1, delimiter=','))
+# Process package file first similar to line 27 - test hash table with something to put it in - process package file
+hash_map = HashTable()
 
+with open('./data/distance_data.csv', encoding='utf-8-sig') as csv_file_1:
+    read_in_csv = csv.reader(csv_file_1, delimiter=',')
+
+    # read_in_csv = list(csv.reader(csv_file_1, delimiter=','))
     # Creates an instance of the HashTable class
-    hash_map = HashTable(len(read_in_csv))
+
     # First Truck Delivery
     first_truck_delivery: List[List[Union[str, Any]]] = []
     # Second Truck Delivery

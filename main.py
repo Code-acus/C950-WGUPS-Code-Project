@@ -18,7 +18,7 @@ class Main:
                        "2. Get status single package for a particular time frame"
                        "3. Quit to exit the package query ")  # Get user input
 
-    while user_input is not "3. Quit to exit the package query":
+    while user_input != "3. Quit to exit the package query":
         # Case of user selects option 1
         # Get details for all packages at a particular time frame
         if user_input == "1":
