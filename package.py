@@ -1,4 +1,3 @@
-
 from typing import List, Union, Any
 from hashtable import HashTable
 import csv
@@ -19,24 +18,27 @@ class Package:
     def get_package_destination(self):
         return self.package_destination
 
+
 # read in the csv files and create a hash table
 # Process package file first similar to line 27 - test hash table with something to put it in - process package file
+
 hash_map = HashTable()
+
+with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file:
+    package_csv = csv.reader(csv_file, delimiter=',')
+    for row in package_csv:
+        package_id = row[0]
+        package_weight = row[1]
+        package_destination = row[2]
+        package = Package(package_id, package_weight, package_destination)
+        hash_map.package_insert(package)
+
+        first_truck_delivery = hash_map.package_search(package_id)
+        second_truck_delivery = hash_map.package_search(package_id)
+        final_truck_delivery = hash_map.package_search(package_id)
 
 with open('./data/distance_data.csv', encoding='utf-8-sig') as csv_file_1:
     read_in_csv = csv.reader(csv_file_1, delimiter=',')
-
-    # read_in_csv = list(csv.reader(csv_file_1, delimiter=','))
-    # Creates an instance of the HashTable class
-
-    # First Truck Delivery
-    first_truck_delivery: List[List[Union[str, Any]]] = []
-    # Second Truck Delivery
-    second_truck_delivery = []
-    # Third Truck Delivery
-    final_truck_delivery = []
-
-    # Inserts the data into the hash table with key/value pairs runs in O(n) time
     for row in read_in_csv:
         package_id = row[0]
         address = row[1]
@@ -46,10 +48,14 @@ with open('./data/distance_data.csv', encoding='utf-8-sig') as csv_file_1:
         delivery_time = row[5]
         size = row[6]
         notes = row[7]
+
         delivery_start_time = ' '
         address_location = ' '
         delivery_status = ' '
 
+        first_truck_delivery = []
+        second_truck_delivery = []
+        final_truck_delivery = []
         value = [package_id, address, city, state, zip_code, delivery_time, size, notes, delivery_start_time,
                  address_location, delivery_status]
 
@@ -58,7 +64,7 @@ with open('./data/distance_data.csv', encoding='utf-8-sig') as csv_file_1:
 
         # Correct incorrect package details
         if "84104" in value[5] and '10:30:00' not in value[6]:
-            delivery_time.append(value)
+            delivery_time.join(value)
 
         # First Truck Delivery
         if value[6] != 'EOD':
@@ -102,5 +108,3 @@ def get_hash_map():
 # Get the current package distance runs in O(1) time
 def get_hash_table():
     return None
-
-

@@ -23,3 +23,6 @@ class HashTable:
             if p.package_id == key:
                 return p
         return None
+
+    def package_search(self, package_id):
+        pass
