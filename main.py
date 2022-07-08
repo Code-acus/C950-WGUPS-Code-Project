@@ -1,6 +1,6 @@
 # Harrison Rogers, Student ID: 00632898
 import csv
-from datetime import datetime
+import datetime
 
 from hashtable import HashTable
 from package import Package
@@ -12,7 +12,6 @@ from package import Package
 #         main()
 
 hash_map = HashTable()
-
 # with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file:
 #     package_csv = csv.reader(csv_file, delimiter=',')
 #     for row in package_csv:
@@ -31,50 +30,20 @@ with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
     for row in read_in_csv:
         package_id = row[0]
         address = row[1]
-        city = row[2]
-        state = row[3]
-        zip_code = row[4]
-        delivery_time = row[5]
-        size = row[6]
-        notes = row[7]
 
-        pkg = Package(package_id, address, city, state, zip_code, delivery_time, size, notes)
+        pkg = Package(package_id, address)
 
-        delivery_start_time = ' '
-        address_location = ' '
-        delivery_status = ' '
+        if package_id == '3':
+            pkg.truck = 2
 
-        first_truck_delivery = []
-        second_truck_delivery = []
-        final_truck_delivery = []
-        value = [package_id, address, city, state, zip_code, delivery_time, size, notes, delivery_start_time,
-                 address_location, delivery_status]
+        if package_id == '6':
+            pkg.earliest_loading_time = datetime.time(9, 5, 0)
 
-        # Conditional statement to determine which truck should be assigned to the package
-        # The packages then will be dropped into a nested list
-
-        # Correct incorrect package details
-        if "84104" in value[5] and '10:30:00' not in value[6]:
-            delivery_time.join(value)
-
-        # First Truck Delivery
-        if value[6] != 'EOD':
-            if 'Must' in value[8] or 'None' in value[8]:
-                first_truck_delivery.append(value)
-
-        # Second Truck Delivery
-        if 'Can only be' in value[8] or 'Delayed' in value[8]:
-            second_truck_delivery.append(value)
-
-        # Check remaining packages
-        if value not in first_truck_delivery and value not in second_truck_delivery and value \
-                not in final_truck_delivery:
-            second_truck_delivery.append(value) if len(second_truck_delivery) < len(
-                first_truck_delivery) else final_truck_delivery.append(value)
-
-        # Inserts the data into the hash table
-        hash_map.package_insert(package_id)
-
+        hash_map.package_insert(pkg)
+    print(hash_map)
+    first_truck_delivery = []
+    second_truck_delivery = []
+    final_truck_delivery = []
 
 # Get packages on the delivery route runs in O(1) time
 def get_first_truck_delivery():

@@ -1,28 +1,28 @@
+import datetime
 from typing import List, Union, Any
 from hashtable import HashTable
 import csv
 
 
 class Package:
-    def __init__(self, package_id,address, city, state, zip_code, delivery_time, size, notes):
+    def __init__(self, package_id, address):
         self.package_id = package_id
         self.address = address
-        self.city = city
-        self.state = state
-        self.zip_code = zip_code
-        self.delivery_time = delivery_time
-        self.size = size
-        self.notes = notes
+        self.delivery_time = None
+        self.loading_time = None
+        self.truck = 1
+        self.earliest_loading_time = datetime.time(8, 0, 0)
 
 
-    def get_package_id(self):
-        return self.package_id
 
-    def get_package_weight(self):
-        return self.package_weight
-
-    def get_package_destination(self):
-        return self.package_destination
+    # def get_package_id(self):
+    #     return self.package_id
+    #
+    # def get_package_weight(self):
+    #     return self.package_weight
+    #
+    # def get_package_destination(self):
+    #     return self.package_destination
 
 
 # read in the csv files and create a hash table
