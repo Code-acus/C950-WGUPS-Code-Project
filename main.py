@@ -58,6 +58,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
     for row in distance_name_csv:
         address_table.append(row)
 
+
 # TODO: Get the index for a given address
 def get_index_for_address(address):
     pass
@@ -65,6 +66,7 @@ def get_index_for_address(address):
         if address == address_entry[2]:
             return int(address_entry[0])
     return -1
+
 
 def get_mileage_for_address(starting_address, ending_address):
     start_index = get_index_for_address(starting_address)
@@ -80,15 +82,23 @@ def get_mileage_for_address(starting_address, ending_address):
     return -1.0
 
 
-
 # TODO: Write the routine to deliver the packages for the trucks
-def deliver_truck(truck):
+def delivery_truck(truck):
     pass
+    for package in truck.packages:
+        package.truck = truck.truck_id
+        package.delivery_date = datetime.datetime.now()
+        package.delivery_mileage = get_mileage_for_address(package.address, truck.destination)
+        package.delivery_status = "Delivered"
+        hash_map1.package_insert(package)
 
-print (get_mileage_for_address(address_table[0][2], address_table[15][2]))
 
-truck_1 = Truck(1, [3, 5, 12], 18, datetime.time(8, 0, 0))
-deliver_truck(truck_1)
+def get_delivery_status(truck):
+    package = hash_map1.package_find(package_id)
+    if package is None:
+        return "Package not found"
+    else:
+        return package.delivery_status
 
 
 user_input = ''

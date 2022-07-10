@@ -51,8 +51,7 @@ class GreedyShortestPathAlgorithm:
         self.package_list_
 # Read the CSV files for the packages and the delivery status
 with open('./data/distance_data.csv') as csv_file_1:
-    distance_csv = list(csv.reader(csv_file_1, delimiter=',')
-
+    distance_csv = list(csv.reader(csv_file_1, delimiter=','))
 with open('./data/distance_name_data.csv') as csv_file_2:
     distance_name_csv = list(csv.reader(csv_file_2, delimiter=','))
 
