@@ -4,13 +4,14 @@ import datetime
 
 from hashtable import HashTable
 from package import Package
+from truck import Truck
 
 hash_map1 = HashTable()
 
 with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
     read_in_csv = csv.reader(csv_file_1, delimiter=',')
     for row in read_in_csv:
-        package_id = row[0]
+        package_id = int(row[0])
         address = row[1]
         pkg = Package(package_id, address)
         hash_map1.package_insert(pkg)
@@ -53,6 +54,11 @@ def get_mileage_for_address(starting_address, ending_address):
     return -1.0
 
 
+truck_1 = Truck(1, [3, 4, 5], 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
+truck_2 = Truck(2, [7, 8, 9], 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
+truck_3 = Truck(3, [11, 12, 13], 18)
+
+
 # TODO: Write the routine to deliver the packages for the trucks
 def delivery_truck(truck):
     pass
@@ -70,6 +76,15 @@ def get_delivery_status(truck):
         return "Package not found"
     else:
         return package.delivery_status
+
+
+def get_truck_for_package_id(package_id):
+    if package_id in truck_1.package_list:
+        return truck_1
+    if package_id in truck_2.package_list:
+        return truck_2
+    if package_id in truck_3.package_list:
+        return truck_3
 
 
 user_input = ''
@@ -97,10 +112,10 @@ while user_input != "3":
             convert_user_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
 
             # Complexity of this code is O(n^2)
-            for count in range(1, 41):
+            for package_id in range(1, 41):
                 try:
-                    first_time = hash_map1.get_value(str(count))[9]
-                    second_time = hash_map1.get_value(str(count))[10]
+                    first_time = hash_map1.get_value(str(package_id))[9]
+                    second_time = hash_map1.get_value(str(package_id))[10]
                     (hrs, mins, secs) = first_time.split(":")
                     convert_first_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
                     (hrs, mins, secs) = second_time.split(":")
@@ -110,32 +125,32 @@ while user_input != "3":
 
                 # Determine which packages have left origin and are enroute to destination
                 if convert_first_time >= convert_user_time:
-                    hash_map1.get_value(str(count))[10] = "At origin"
-                    hash_map1.get_value(str(count))[9] = "leaving origin at: " + first_time
+                    hash_map1.get_value(str(package_id))[10] = "At origin"
+                    hash_map1.get_value(str(package_id))[9] = "leaving origin at: " + first_time
 
                     # Print the current package details
-                    print(f'Package ID: {hash_map1.get_value(str(count))[0]}, '
-                          f'Package Delivery Status: {hash_map1.get_value(str(count))[10]}')
+                    print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
+                          f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
 
                 # Determine which packages have left destination but have not yet been delivered
                 elif convert_second_time <= convert_user_time:
                     if convert_user_time < convert_second_time:
-                        hash_map1.get_value(str(count))[10] = "In transit to destination"
-                        hash_map1.get_value(str(count))[9] = "left destination at: " + first_time
+                        hash_map1.get_value(str(package_id))[10] = "In transit to destination"
+                        hash_map1.get_value(str(package_id))[9] = "left destination at: " + first_time
 
                         # Print the current package details
-                        print(f'Package ID: {hash_map1.get_value(str(count))[0]}, '
-                              f'Package Delivery Status: {hash_map1.get_value(str(count))[10]}')
+                        print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
+                              f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
 
 
                 # Determine which packages have been delivered
                 else:
-                    hash_map1.get_value(str(count))[10] = "Delivered at " + second_time
-                    hash_map1.get_value(str(count))[9] = "Left at : " + first_time
+                    hash_map1.get_value(str(package_id))[10] = "Delivered at " + second_time
+                    hash_map1.get_value(str(package_id))[9] = "Left at : " + first_time
 
                     # Print the current package details
-                    print(f'Package ID: {hash_map1.get_value(str(count))[0]}, '
-                          f'Package Delivery Status: {hash_map1.get_value(str(count))[10]}')
+                    print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
+                          f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
 
         except IndexError:
             print(IndexError)
@@ -150,60 +165,18 @@ while user_input != "3":
     elif user_input == "2":
         try:
             # Get the time frame from the user
-            count = input("Enter a package ID: ")
-            first_time = hash_map1.get_value(str(count))[9]
-            second_time = hash_map1.get_value(str(count))[10]
+            package_id = input("Enter a package ID: ")
+            # first_time = hash_map1.get_value(str(package_id))
+            # second_time = hash_map1.get_value(str(package_id))[10]
             input_time = input("Enter a time (HH:MM:SS): ")
             (hrs, mins, secs) = input_time.split(":")
-            convert_user_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
-            (hrs, mins, secs) = first_time.split(":")
-            convert_first_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
-            (hrs, mins, secs) = second_time.split(":")
-            convert_second_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
+            convert_user_time = datetime.datetime(2022, 1, 1, int(hrs), int(mins), int(secs))
+            package_object = hash_map1.package_find(int(package_id))
+            package_truck = get_truck_for_package_id(int(package_id))
+            print(package_object.print_package_status_for_time(convert_user_time, package_truck.start_time))
 
-            # Determine which packages have left origin and are enroute to destination
-            if convert_first_time >= convert_user_time:
-                hash_map1.get_value(str(count))[10] = "At origin"
-                hash_map1.get_value(str(count))[9] = "leaving origin at: " + first_time
-
-                # Print the current package details
-                print(f'Package ID: {hash_map1.get_value(str(count))[0]}\n'
-                      f'Street address: {hash_map1.get_value(str(count))[2]}\n'
-                      f'Required delivery time: {hash_map1.get_value(str(count))[6]}\n'
-                      f'Package weight: {hash_map1.get_value(str(count))[7]}\n'
-                      f'Truck status: {hash_map1.get_value(str(count))[9]}\n'
-                      f'Package delivery status: {hash_map1.get_value(str(count))[10]}\n')
-
-            # Determine which packages have left destination but have not yet been delivered
-            elif convert_second_time <= convert_user_time:
-                if convert_user_time < convert_second_time:
-                    hash_map1.get_value(str(count))[10] = "In transit to destination"
-                    hash_map1.get_value(str(count))[9] = "left destination at: " + first_time
-
-                    # Print the current package details
-                    print(f'Package ID: {hash_map1.get_value(str(count))[0]}\n'
-                          f'Street address: {hash_map1.get_value(str(count))[2]}\n'
-                          f'Required delivery time: {hash_map1.get_value(str(count))[6]}\n'
-                          f'Package weight: {hash_map1.get_value(str(count))[7]}\n'
-                          f'Truck status: {hash_map1.get_value(str(count))[9]}\n'
-                          f'Package delivery status: {hash_map1.get_value(str(count))[10]}\n')
-
-
-            # Determine which packages have been delivered
-            else:
-                hash_map1.get_value(str(count))[10] = "Delivered at " + second_time
-                hash_map1.get_value(str(count))[9] = "Left at : " + first_time
-
-                # Print the current package details
-                print(f'Package ID: {hash_map1.get_value(str(count))[0]}\n'
-                      f'Street address: {hash_map1.get_value(str(count))[2]}\n'
-                      f'Required delivery time: {hash_map1.get_value(str(count))[6]}\n'
-                      f'Package weight: {hash_map1.get_value(str(count))[7]}\n'
-                      f'Truck status: {hash_map1.get_value(str(count))[9]}\n'
-                      f'Package delivery status: {hash_map1.get_value(str(count))[10]}\n')
-
-        except ValueError:
-            print('Invalid Entry')
+        except ValueError as e:
+            print('Invalid Entry', e)
             exit()
 
     # Case of user selects option 1

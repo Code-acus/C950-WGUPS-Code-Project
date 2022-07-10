@@ -15,13 +15,13 @@ class HashTable:
     # Explain with comments what the "with" does and why you are using this
     def package_insert(self, new_package_insert):
        key_hash = self.get_hash_value(new_package_insert.package_id)
-       self.hashtable[key_hash].append(new_package_insert)
+       self.hashtable[key_hash].append([new_package_insert.package_id, new_package_insert])
 
     def package_find(self, key):
         key_hash = self.get_hash_value(key)
         for p in self.hashtable[key_hash]:
-            if p.package_id == key:
-                return p
+            if p[0] == key:
+                return p[1]
         return None
 
     def get_value(self, key):

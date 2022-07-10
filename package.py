@@ -25,8 +25,19 @@ class Package:
                + str(self.delivery_time) + " Loading Time: " + str(self.loading_time) + " Earliest Loading Time: " \
                + str(self.earliest_loading_time) + " Mileage: " + str(self.mileage)
 
-    def __repr__(self):
+    def print_package_status_for_time(self, requested_time, start_time):
+        status = "enroute"
+
+        if requested_time < start_time:
+            status = "at hub"
+
+        elif self.delivery_time is None:
+            status = "enroute"
+
+        elif requested_time > self.delivery_time:
+            status = "delivered"
+
         return "Package ID: " + str(self.package_id) + " Address: " + str(self.address) + " Delivery Time: " \
                + str(self.delivery_time) + " Loading Time: " + str(self.loading_time) + " Earliest Loading Time: " \
-               + str(self.earliest_loading_time) + " Mileage: " + str(self.mileage)
+               + str(self.earliest_loading_time) + " Mileage: " + str(self.mileage) + " Status: " + status
 
