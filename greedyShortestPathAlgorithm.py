@@ -1,63 +1,67 @@
-
 import csv
 import datetime
+
 
 class GreedyShortestPathAlgorithm:
     def __init__(self):
         self.hash_map = {}
-        self.package_list = []
-        self.package_list_2 = []
-        self.package_list_3 = []
-        self.package_list_4 = []
-        self.package_list_5 = []
-        self.package_list_6 = []
-        self.package_list_7 = []
-        self.package_list_8 = []
-        self.package_list_9 = []
-        self.package_list_10 = []
-        self.package_list_11 = []
-        self.package_list_12 = []
-        self.package_list_13 = []
-        self.package_list_14 = []
-        self.package_list_15 = []
-        self.package_list_16 = []
-        self.package_list_17 = []
-        self.package_list_18 = []
-        self.package_list_19 = []
-        self.package_list_20 = []
-        self.package_list_21 = []
-        self.package_list_22 = []
-        self.package_list_23 = []
-        self.package_list_24 = []
-        self.package_list_25 = []
-        self.package_list_26 = []
-        self.package_list_27 = []
-        self.package_list_28 = []
-        self.package_list_29 = []
-        self.package_list_30 = []
-        self.package_list_31 = []
-        self.package_list_32 = []
-        self.package_list_33 = []
-        self.package_list_34 = []
-        self.package_list_35 = []
-        self.package_list_36 = []
-        self.package_list_37 = []
-        self.package_list_38 = []
-        self.package_list_39 = []
-        self.package_list_40 = []
-        self.package_list_41 = []
-        self.package_list_42 = []
-        self.package_list_43 = []
-        self.package_list_
+        # self.package_list = []
+        # self.package_list_2 = []
+        # self.package_list_3 = []
+        # self.package_list_4 = []
+        # self.package_list_5 = []
+        # self.package_list_6 = []
+        # self.package_list_7 = []
+        # self.package_list_8 = []
+        # self.package_list_9 = []
+        # self.package_list_10 = []
+        # self.package_list_11 = []
+        # self.package_list_12 = []
+        # self.package_list_13 = []
+        # self.package_list_14 = []
+        # self.package_list_15 = []
+        # self.package_list_16 = []
+        # self.package_list_17 = []
+        # self.package_list_18 = []
+        # self.package_list_19 = []
+        # self.package_list_20 = []
+        # self.package_list_21 = []
+        # self.package_list_22 = []
+        # self.package_list_23 = []
+        # self.package_list_24 = []
+        # self.package_list_25 = []
+        # self.package_list_26 = []
+        # self.package_list_27 = []
+        # self.package_list_28 = []
+        # self.package_list_29 = []
+        # self.package_list_30 = []
+        # self.package_list_31 = []
+        # self.package_list_32 = []
+        # self.package_list_33 = []
+        # self.package_list_34 = []
+        # self.package_list_35 = []
+        # self.package_list_36 = []
+        # self.package_list_37 = []
+        # self.package_list_38 = []
+        # self.package_list_39 = []
+        # self.package_list_40 = []
+        # self.package_list_41 = []
+        # self.package_list_42 = []
+        # self.package_list_43 = []
+        #
+
+
 # Read the CSV files for the packages and the delivery status
 with open('./data/distance_data.csv') as csv_file_1:
     distance_csv = list(csv.reader(csv_file_1, delimiter=','))
 with open('./data/distance_name_data.csv') as csv_file_2:
     distance_name_csv = list(csv.reader(csv_file_2, delimiter=','))
 
+
     # Get package address data is in O(n) time
     def get_package_delivery_address():
         return distance_name_csv
+
 
     # Calculate the total package deliver distance from the row/column values which is in O(1) time
     def get_package_delivery_distance(row, col, total):
@@ -67,6 +71,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
 
         return total + float(distance)
 
+
     # Calculate the current package delivery distance from the row/column values which is in O(1) time
     def get_current_package_distance(row, col):
         distance = distance_csv[row][col]
@@ -74,6 +79,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
             distance = distance_csv[col][row]
 
         return float(distance)
+
 
     # Calculate total distance for a given truck -> O(n)
     def get_delivery_time(distance, truck_list):
@@ -89,6 +95,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
                                         minutes=int(mins), seconds=int(secs))
         return total
 
+
     # these lists represent the sorted trucks that are put in order of efficiency in the function below
     first_delivery_truck = []
     first_delivery_truck_indices = []
@@ -96,6 +103,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
     second_delivery_truck_indices = []
     final_delivery_truck = []
     final_delivery_truck_indices = []
+
 
     # I have an algorithm that uses a greedy plus shortest path.
     # Because the algorithm uses a kind of recursion to determine
@@ -161,27 +169,33 @@ with open('./data/distance_name_data.csv') as csv_file_2:
                     curr_location = location
                     get_shortest_path(_list, 3, curr_location)
 
+
     # Insert 0 for the first index of each index list
     first_delivery_truck_indices.insert(0, '0')
     second_delivery_truck_indices.insert(0, '0')
     final_delivery_truck_indices.insert(0, '0')
 
+
     # The following are all helper functions to return a desired value -> O(1)
     def first_delivery_truck_index():
         return first_delivery_truck_indices
 
+
     def first_delivery_truck_list():
         return first_delivery_truck
+
 
     def second_delivery_truck_index():
         return second_delivery_truck_indices
 
+
     def second_delivery_truck_list():
         return second_delivery_truck
+
 
     def final_delivery_truck_index():
         return final_delivery_truck_indices
 
+
     def final_delivery_truck_list():
         return final_delivery_truck
-

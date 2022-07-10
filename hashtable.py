@@ -27,13 +27,13 @@ class HashTable:
     def get_value(self, key):
         return self.package_find(key)
 
-    # def __str__(self):
-    #     i = 0
-    #     ret_str = ""
-    #     for bucket in self.hashtable:
-    #         ret_str = ret_str + str(i)
-    #         for package in bucket:
-    #             print(package)
-    #             print("->")
-    #         print("\n")
-    #         i += 1
+    def __str__(self):
+        i = 0
+        ret_str = ""
+        for bucket in self.hashtable:
+            ret_str = ret_str + str(i)
+            for package in bucket:
+                print(package)
+                print("->")
+                print("\n")
+                i += 1
