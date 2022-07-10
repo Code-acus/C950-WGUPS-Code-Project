@@ -5,46 +5,15 @@ import datetime
 from hashtable import HashTable
 from package import Package
 
-# class Main:
-#     # This is the message the user will see displayed when the program starts
-#     # The interface is accessible from here
-#     def __init__(self):
-#         main()
-from truck import Truck
-
 hash_map1 = HashTable()
-# with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file:
-#     package_csv = csv.reader(csv_file, delimiter=',')
-#     for row in package_csv:
-#         package_id = row[0]
-#         package_weight = row[1]
-#         package_destination = row[2]
-#         package = Package(package_id, package_weight, package_destination)
-#         hash_map.package_insert(package)
-#
-#         first_truck_delivery = hash_map.package_search(package_id)
-#         second_truck_delivery = hash_map.package_search(package_id)
-#         final_truck_delivery = hash_map.package_search(package_id)
 
 with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
     read_in_csv = csv.reader(csv_file_1, delimiter=',')
     for row in read_in_csv:
         package_id = row[0]
         address = row[1]
-
         pkg = Package(package_id, address)
-
-        # if package_id == '3':
-        #     pkg.truck = 2
-        #
-        # if package_id == '6':
-        #     pkg.truck = 3
-        #
-        # if package_id == '7':
-        #     pkg.truck = 4
-
         hash_map1.package_insert(pkg)
-    # print(hash_map1)
 
 distance_table = [[]]
 with open('./data/distance_data.csv') as csv_file_1:
@@ -59,6 +28,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
     for row in distance_name_csv:
         address_dict[row[0]] = row[1]
 print(address_dict)
+
 
 # TODO: Get the index for a given address
 def get_index_for_address(address):
