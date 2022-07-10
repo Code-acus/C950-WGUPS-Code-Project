@@ -20,6 +20,15 @@ class Package:
         self.delivery_time = delivery_time
         self.mileage = mileage
 
+    def __str__(self):
+        return "Package ID: " + str(self.package_id) + " Address: " + str(self.address) + " Delivery Time: " \
+               + str(self.delivery_time) + " Loading Time: " + str(self.loading_time) + " Earliest Loading Time: " \
+               + str(self.earliest_loading_time) + " Mileage: " + str(self.mileage)
+
+    def __repr__(self):
+        return "Package ID: " + str(self.package_id) + " Address: " + str(self.address) + " Delivery Time: " \
+               + str(self.delivery_time) + " Loading Time: " + str(self.loading_time) + " Earliest Loading Time: " \
+               + str(self.earliest_loading_time) + " Mileage: " + str(self.mileage)
     # def get_package_id(self):
     #     return self.package_id
     #

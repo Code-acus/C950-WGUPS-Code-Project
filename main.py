@@ -44,25 +44,26 @@ with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
         #     pkg.truck = 4
 
         hash_map1.package_insert(pkg)
-    print(hash_map1)
+    # print(hash_map1)
 
-distance_table = []
+distance_table = [[]]
 with open('./data/distance_data.csv') as csv_file_1:
     distance_csv = list(csv.reader(csv_file_1, delimiter=','))
     for row in distance_csv:
         distance_table.append(row)
+print(distance_table)
 
-address_table = []
+address_dict = {}
 with open('./data/distance_name_data.csv') as csv_file_2:
     distance_name_csv = list(csv.reader(csv_file_2, delimiter=','))
     for row in distance_name_csv:
-        address_table.append(row)
-
+        address_dict[row[0]] = row[1]
+print(address_dict)
 
 # TODO: Get the index for a given address
 def get_index_for_address(address):
     pass
-    for address_entry in address_table:
+    for address_entry in address_dict:
         if address == address_entry[2]:
             return int(address_entry[0])
     return -1

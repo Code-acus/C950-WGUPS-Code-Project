@@ -28,12 +28,23 @@ class HashTable:
         return self.package_find(key)
 
     def __str__(self):
-        i = 0
+        bucket_num = 0
         ret_str = ""
         for bucket in self.hashtable:
-            ret_str = ret_str + str(i)
+            ret_str = ret_str + str(bucket_num) + "\n"
             for package in bucket:
-                print(package)
-                print("->")
-                print("\n")
-                i += 1
+                ret_str = ret_str + str(package)
+                ret_str = ret_str + "\n"
+            bucket_num += 1
+        return ret_str
+
+    def __repr__(self):
+        bucket_num = 0
+        ret_str = ""
+        for bucket in self.hashtable:
+            ret_str = ret_str + str(bucket_num) + "\n"
+            for package in bucket:
+                ret_str = ret_str + str(package)
+                ret_str = ret_str + "\n"
+            bucket_num += 1
+        return ret_str
