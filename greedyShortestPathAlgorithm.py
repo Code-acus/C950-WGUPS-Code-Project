@@ -50,7 +50,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
     final_delivery_truck = []
     final_delivery_truck_indices = []
 
-    # I have an algorithm that uses a greedy plus shortest path.
+    # Shortest path algo with a greedy approach
     # Because the algorithm uses a kind of recursion to determine
     # an optimal location to visit next which is also based on the current location
     # The shortest path first approach was also adapted.

@@ -6,7 +6,6 @@ class Package:
         self.address = address
         self.delivery_time = None
         self.loading_time = None
-        # self.truck = 1
         self.earliest_loading_time = datetime.time(8, 0, 0)
         self.mileage = 0
 

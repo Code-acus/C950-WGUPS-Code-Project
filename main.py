@@ -1,7 +1,6 @@
 # Harrison Rogers, Student ID: 00632898
 import csv
 import datetime
-
 from hashtable import HashTable
 from package import Package
 from truck import Truck
@@ -31,7 +30,6 @@ with open('./data/distance_name_data.csv') as csv_file_2:
 print(address_dict)
 
 
-# TODO: Get the index for a given address
 def get_index_for_address(address):
     pass
     for address_entry in address_dict:
@@ -59,7 +57,6 @@ truck_2 = Truck(2, [7, 8, 9], 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
 truck_3 = Truck(3, [11, 12, 13], 18)
 
 
-# TODO: Write the routine to deliver the packages for the trucks
 def delivery_truck(truck):
     pass
     for package in truck.packages:
@@ -70,7 +67,7 @@ def delivery_truck(truck):
         hash_map1.package_insert(package)
 
 
-def get_delivery_status(truck):
+def get_delivery_status(package_id):
     package = hash_map1.package_find(package_id)
     if package is None:
         return "Package not found"
@@ -166,8 +163,6 @@ while user_input != "3":
         try:
             # Get the time frame from the user
             package_id = input("Enter a package ID: ")
-            # first_time = hash_map1.get_value(str(package_id))
-            # second_time = hash_map1.get_value(str(package_id))[10]
             input_time = input("Enter a time (HH:MM:SS): ")
             (hrs, mins, secs) = input_time.split(":")
             convert_user_time = datetime.datetime(2022, 1, 1, int(hrs), int(mins), int(secs))
