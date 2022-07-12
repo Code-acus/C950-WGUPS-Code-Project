@@ -111,8 +111,8 @@ while user_input != "3":
             # Complexity of this code is O(n^2)
             for package_id in range(1, 41):
                 try:
-                    first_time = hash_map1.get_value(str(package_id))[9]
-                    second_time = hash_map1.get_value(str(package_id))[10]
+                    first_time = hash_map1.get_value(str(package_id)) #[9]
+                    second_time = hash_map1.get_value(str(package_id)) #[10]
                     (hrs, mins, secs) = first_time.split(":")
                     convert_first_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
                     (hrs, mins, secs) = second_time.split(":")
