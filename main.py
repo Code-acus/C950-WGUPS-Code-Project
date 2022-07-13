@@ -2,6 +2,7 @@
 import csv
 import datetime
 
+import package
 from hashtable import HashTable
 from package import Package
 from truck import Truck
@@ -30,6 +31,32 @@ with open('./data/distance_name_data.csv') as csv_file_2:
         address_dict[row[0]] = row[1]
 print(address_dict)
 
+truck1_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+truck2_list = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+truck3_list = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+
+current_loc_index = 0
+current_min_dist = 100.0
+current_min_package = None
+total_mileage = 0.0
+truck1_time = datetime.time(8, 0, 0)
+truck2_time = datetime.time(9, 5, 0)
+
+# TODO: Add a loop to get the package id from the user and get the delivery status
+for package_id in truck1_list:
+    package = hash_map1.package_find(package_id)
+    package_loc_index = address_dict[package.address]
+    current_dist = distance_table[current_loc_index][package_loc_index]
+    if current_dist < current_min_dist:
+        current_min_dist = current_dist
+        current_min_package = package
+total_mileage += current_min_dist
+mins = (current_min_dist * 60) / 18.0
+convert_user_time = datetime.timedelta(hours=0, minutes=int(mins), seconds=0)
+truck1_time += convert_user_time
+package.delivery_time = truck1_time
+current_loc_index = package_loc_index
+truck2_list.pop(package_id)
 
 def get_index_for_address(address):
     pass
@@ -53,9 +80,9 @@ def get_mileage_for_address(starting_address, ending_address):
     return -1.0
 
 
-truck_1 = Truck(1, [3, 4, 5], 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
-truck_2 = Truck(2, [7, 8, 9], 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
-truck_3 = Truck(3, [11, 12, 13], 18)
+# truck_1 = Truck(1, [3, 4, 5], 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
+# truck_2 = Truck(2, [7, 8, 9], 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
+# truck_3 = Truck(3, [11, 12, 13], 18)
 
 
 def delivery_truck(truck):
