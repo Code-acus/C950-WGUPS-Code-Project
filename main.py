@@ -1,11 +1,11 @@
 # Harrison Rogers, Student ID: 00632898
+
 import csv
 import datetime
-
 import package
 from hashtable import HashTable
 from package import Package
-from truck import Truck
+
 
 hash_map1 = HashTable()
 
@@ -31,9 +31,9 @@ with open('./data/distance_name_data.csv') as csv_file_2:
         address_dict[row[0]] = row[1]
 print(address_dict)
 
-truck1_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-truck2_list = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-truck3_list = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+truck1_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+truck2_list = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+truck3_list = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
 
 current_loc_index = 0
 current_min_dist = 100.0
@@ -57,6 +57,7 @@ truck1_time += convert_user_time
 package.delivery_time = truck1_time
 current_loc_index = package_loc_index
 truck2_list.pop(package_id)
+truck3_list.pop(package_id)
 
 def get_index_for_address(address):
     pass
@@ -103,7 +104,7 @@ def get_delivery_status(package_id):
         return package.delivery_status
 
 
-def get_truck_for_package_id(package_id):
+def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=None):
     if package_id in truck_1.package_list:
         return truck_1
     if package_id in truck_2.package_list:
