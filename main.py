@@ -32,7 +32,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
 print(address_dict)
 
 truck1_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-truck2_list = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+truck2_list = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
 truck3_list = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
 
 current_loc_index = 0
@@ -42,10 +42,13 @@ total_mileage = 0.0
 truck1_time = datetime.time(8, 0, 0)
 truck2_time = datetime.time(9, 5, 0)
 
-while truck1_list:
+while len(truck1_list) > 0:
+    current_min_package = None
+    current_min_dist = 100.0
     for package_id in truck1_list:
         package = hash_map1.package_find(package_id)
         package_loc_index = address_dict[package.address]
+        print(package_id, current_loc_index, package_loc_index)
         if current_loc_index > package_loc_index:
             current_dist = float(distance_table[current_loc_index][package_loc_index])
         else:
@@ -53,14 +56,17 @@ while truck1_list:
         if current_dist < current_min_dist:
             current_min_dist = current_dist
             current_min_package = package
-    total_mileage += current_min_dist
-    mins = (current_min_dist * 60) / 18.0
-    convert_user_time = datetime.timedelta(hours=0, minutes=int(mins), seconds=0)
-    truck1_time = (datetime.datetime.combine(datetime.datetime.today(), truck1_time) + convert_user_time).time()
-    package.delivery_time = truck1_time
-    current_loc_index = package_loc_index
-    truck1_list.pop(package_id)
-    print("Delivered package", package_id, "at", truck1_time)
+    if current_min_package is not None:
+        total_mileage += current_min_dist
+        mins = (current_min_dist * 60) / 18.0
+        convert_user_time = datetime.timedelta(hours=0, minutes=int(mins), seconds=0)
+        truck1_time = (datetime.datetime.combine(datetime.datetime.today(), truck1_time) + convert_user_time).time()
+        package.delivery_time = truck1_time
+        current_loc_index = package_loc_index
+        print('**', current_loc_index, package_loc_index, truck1_list.index(current_min_package.package_id))
+        my_test_local_var = truck1_list.index(current_min_package.package_id)
+        truck1_list.pop(my_test_local_var)
+        print("Delivered package", package_id, "at", truck1_time)
 
 def get_index_for_address(address):
     pass
