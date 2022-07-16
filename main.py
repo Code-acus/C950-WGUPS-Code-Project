@@ -6,7 +6,6 @@ import package
 from hashtable import HashTable
 from package import Package
 
-
 hash_map1 = HashTable()
 
 with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
@@ -67,6 +66,7 @@ while len(truck1_list) > 0:
         my_test_local_var = truck1_list.index(current_min_package.package_id)
         truck1_list.pop(my_test_local_var)
         print("Delivered package", package_id, "at", truck1_time)
+
 
 def get_index_for_address(address):
     pass
@@ -149,8 +149,8 @@ while user_input != "3":
             # Complexity of this code is O(n^2)
             for package_id in range(1, 41):
                 try:
-                    first_time = hash_map1.get_value(str(package_id)) #[9]
-                    second_time = hash_map1.get_value(str(package_id)) #[10]
+                    first_time = hash_map1.get_value(str(package_id))  # [9]
+                    second_time = hash_map1.get_value(str(package_id))  # [10]
                     (hrs, mins, secs) = first_time.split(":")
                     convert_first_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
                     (hrs, mins, secs) = second_time.split(":")
