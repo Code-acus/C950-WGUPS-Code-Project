@@ -5,6 +5,7 @@ import datetime
 import package
 from hashtable import HashTable
 from package import Package
+from truck import Truck
 
 hash_map1 = HashTable()
 
@@ -16,56 +17,72 @@ with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
         pkg = Package(package_id, address)
         hash_map1.package_insert(pkg)
 
-distance_table = [[]]
+distance_table = []
 with open('./data/distance_data.csv') as csv_file_1:
     distance_csv = list(csv.reader(csv_file_1, delimiter=','))
     for row in distance_csv:
         distance_table.append(row)
-print(distance_table)
+        # print(row)
 
 address_dict = {}
 with open('./data/distance_name_data.csv') as csv_file_2:
     distance_name_csv = list(csv.reader(csv_file_2, delimiter=','))
     for row in distance_name_csv:
         address_dict[row[1]] = int(row[0])
-print(address_dict)
 
-truck1_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-truck2_list = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-truck3_list = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
 
-current_loc_index = 0
-current_min_dist = 100.0
-current_min_package = None
-total_mileage = 0.0
-truck1_time = datetime.time(8, 0, 0)
-truck2_time = datetime.time(9, 5, 0)
+# print(address_dict)
 
-while len(truck1_list) > 0:
-    current_min_package = None
-    current_min_dist = 100.0
-    for package_id in truck1_list:
+def has_more_packages(truck):
+    for package_id in truck.package_list:
         package = hash_map1.package_find(package_id)
-        package_loc_index = address_dict[package.address]
-        print(package_id, current_loc_index, package_loc_index)
-        if current_loc_index > package_loc_index:
-            current_dist = float(distance_table[current_loc_index][package_loc_index])
-        else:
-            current_dist = float(distance_table[package_loc_index][current_loc_index])
-        if current_dist < current_min_dist:
-            current_min_dist = current_dist
-            current_min_package = package
-    if current_min_package is not None:
-        total_mileage += current_min_dist
-        mins = (current_min_dist * 60) / 18.0
-        convert_user_time = datetime.timedelta(hours=0, minutes=int(mins), seconds=0)
-        truck1_time = (datetime.datetime.combine(datetime.datetime.today(), truck1_time) + convert_user_time).time()
-        package.delivery_time = truck1_time
-        current_loc_index = package_loc_index
-        print('**', current_loc_index, package_loc_index, truck1_list.index(current_min_package.package_id))
-        my_test_local_var = truck1_list.index(current_min_package.package_id)
-        truck1_list.pop(my_test_local_var)
-        print("Delivered package", package_id, "at", truck1_time)
+        if package.is_not_delivered():
+            return True
+    return False
+
+
+def deliver_packages_for_truck(truck):
+    truck_distance = 0.0
+    current_loc_index = 0
+    current_time = truck.start_time
+    print(truck.package_list)
+    while has_more_packages(truck):
+        current_min_package = None
+        current_min_dist = 100.0
+        for package_id in truck.package_list:
+            package = hash_map1.package_find(package_id)
+            if package.is_not_delivered():
+
+                package_loc_index = address_dict[package.address]
+                # print(package_id, current_loc_index, package_loc_index)
+                if current_loc_index > package_loc_index:
+                    current_dist = float(distance_table[current_loc_index][package_loc_index])
+                else:
+                    current_dist = float(distance_table[package_loc_index][current_loc_index])
+                    # Checking if current distance is less than min distance
+                if current_dist < current_min_dist:
+                    current_min_dist = current_dist
+                    current_min_package = package
+
+        if current_min_package is not None:
+            mins = (current_min_dist * 60) / 18.0
+            current_time = current_time + datetime.timedelta(minutes=mins)
+            current_min_package.delivery_time = current_time
+            current_loc_index = package_loc_index
+            truck_distance += current_min_dist
+            # print('**', current_loc_index, package_loc_index, truck.package_list.index(current_min_package.package_id))
+            # my_test_local_var = truck.package_list.index(current_min_package.package_id)
+            # truck.package_list.pop(my_test_local_var)
+            print("Delivered package", current_min_package.package_id, "at", current_time, current_min_dist,
+                  truck_distance)
+
+        current_dist = float(distance_table[current_loc_index][0])
+        truck_distance += current_dist
+        truck.total_distance += truck_distance
+        mins = (current_dist * 60) / 18.0
+        current_time = current_time + datetime.timedelta(minutes=mins)
+    print(truck.truck_id, "Delivered")
+    return current_time
 
 
 def get_index_for_address(address):
@@ -90,21 +107,6 @@ def get_mileage_for_address(starting_address, ending_address):
     return -1.0
 
 
-# truck_1 = Truck(1, [3, 4, 5], 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
-# truck_2 = Truck(2, [7, 8, 9], 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
-# truck_3 = Truck(3, [11, 12, 13], 18)
-
-
-def delivery_truck(truck):
-    pass
-    for package in truck.packages:
-        package.truck = truck.truck_id
-        package.delivery_date = datetime.datetime.now()
-        package.delivery_mileage = get_mileage_for_address(package.address, truck.destination)
-        package.delivery_status = "Delivered"
-        hash_map1.package_insert(package)
-
-
 def get_delivery_status(package_id):
     package = hash_map1.package_find(package_id)
     if package is None:
@@ -122,6 +124,21 @@ def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=Non
         return truck_3
 
 
+# Main run:
+
+truck1_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+truck2_list = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+truck3_list = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
+
+truck_1 = Truck(1, truck1_list, 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
+truck_2 = Truck(2, truck2_list, 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
+truck_3 = Truck(3, truck3_list, 18)
+
+truck_1_finish_time = deliver_packages_for_truck(truck_1)
+deliver_packages_for_truck(truck_2)
+truck_3.start_time = truck_1_finish_time
+deliver_packages_for_truck(truck_3)
+
 user_input = ''
 while user_input != "3":
     # global convert_first_time, convert_second_time, first_time, second_time
@@ -129,7 +146,8 @@ while user_input != "3":
     print("----------------------------------------------")
     print("THE WGUPS - PARCEL AND PACKAGE ROUTING SYSTEM.")
     print("----------------------------------------------")
-
+    print("Total Truck Distance:", truck_1.total_distance, truck_2.total_distance, truck_3.total_distance)
+    print("----------------------------------------------")
     print("Please select from the options below:")
     print("1. Get status for all packages for a particular time frame")
     print("2. Get status single package for a particular time frame")
