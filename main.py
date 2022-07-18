@@ -1,4 +1,4 @@
-# Harrison Rogers, Student ID: 00632898
+.,# Harrison Rogers, Student ID: 00632898
 
 import csv
 import datetime
