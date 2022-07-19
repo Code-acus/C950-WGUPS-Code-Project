@@ -63,25 +63,24 @@ def deliver_packages_for_truck(truck):
                     current_min_dist = current_dist
                     current_min_package = package
 
-        if current_min_package is not None:
-            mins = (current_min_dist * 60) / 18.0
-            current_time = current_time + datetime.timedelta(minutes=mins)
-            current_min_package.delivery_time = current_time
-            current_loc_index = package_loc_index
-            truck_distance += current_min_dist
-            # print('**', current_loc_index, package_loc_index, truck.package_list.index(current_min_package.package_id))
-            # my_test_local_var = truck.package_list.index(current_min_package.package_id)
-            # truck.package_list.pop(my_test_local_var)
-            print("Delivered package", current_min_package.package_id, "at", current_time, current_min_dist,
-                  truck_distance)
-
-        current_dist = float(distance_table[current_loc_index][0])
-        truck_distance += current_dist
-        truck.total_distance += truck_distance
-        mins = (current_dist * 60) / 18.0
+        # if current_min_package is not None:
+        mins = (current_min_dist * 60) / 18.0
         current_time = current_time + datetime.timedelta(minutes=mins)
-    print(truck.truck_id, "Delivered")
-    return current_time
+        current_min_package.delivery_time = current_time
+        current_loc_index = package_loc_index
+        truck_distance += current_min_dist
+        # print('**', current_loc_index, package_loc_index, truck.package_list.index(current_min_package.package_id))
+        # my_test_local_var = truck.package_list.index(current_min_package.package_id)
+        # truck.package_list.pop(my_test_local_var)
+        print("Delivered package", current_min_package.package_id, "at", current_time, current_min_dist,
+              truck_distance)
+
+        # current_dist = float(distance_table[current_loc_index][0])
+        # truck_distance += current_dist
+        # truck.total_distance += truck_distance
+        # mins = (current_dist * 60) / 18.0
+        # current_time = current_time + datetime.timedelta(minutes=mins)
+    return current_time, truck_distance
 
 
 def get_index_for_address(address):
@@ -133,11 +132,12 @@ truck_1 = Truck(1, truck1_list, 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
 truck_2 = Truck(2, truck2_list, 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
 truck_3 = Truck(3, truck3_list, 18)
 
-truck_1_finish_time = deliver_packages_for_truck(truck_1)
-deliver_packages_for_truck(truck_2)
+truck_1_finish_time, truck_1_total_miles = deliver_packages_for_truck(truck_1)
+truck_2_finish_time, truck_2_total_miles = deliver_packages_for_truck(truck_2)
 truck_3.start_time = truck_1_finish_time
-deliver_packages_for_truck(truck_3)
-
+truck_3_finish_time, truck_3_total_miles = deliver_packages_for_truck(truck_3)
+truck_total_miles = truck_1_total_miles + truck_2_total_miles + truck_3_total_miles
+print("total_miles ", truck_total_miles)
 user_input = ''
 while user_input != "3":
     # global convert_first_time, convert_second_time, first_time, second_time

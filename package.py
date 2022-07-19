@@ -13,7 +13,7 @@ class Package:
         return self.delivery_time is not None
 
     def is_not_delivered(self):
-        return not self.is_delivered()
+        return self.delivery_time is None
 
     def deliver(self, delivery_time, mileage):
         self.delivery_time = delivery_time
