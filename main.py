@@ -124,19 +124,19 @@ def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=Non
 
 # Main run:
 
-truck1_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-truck2_list = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
-truck3_list = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
+truck1_list = [1, 2, 3, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 19, 20]
+truck2_list = [4, 5, 9, 27, 28, 29, 30,17, 18, 21, 22, 23, 24, 25, 26]
+truck3_list = [31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
 
 truck_1 = Truck(1, truck1_list, 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
 truck_2 = Truck(2, truck2_list, 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
 truck_3 = Truck(3, truck3_list, 18)
 
-truck_1_finish_time, truck_1_total_miles = deliver_packages_for_truck(truck_1)
-truck_2_finish_time, truck_2_total_miles = deliver_packages_for_truck(truck_2)
-truck_3.start_time = truck_1_finish_time
-truck_3_finish_time, truck_3_total_miles = deliver_packages_for_truck(truck_3)
-truck_total_miles = truck_1_total_miles + truck_2_total_miles + truck_3_total_miles
+truck_1.finish_time, truck_1.total_distance = deliver_packages_for_truck(truck_1)
+truck_2.finish_time, truck_2.total_distance = deliver_packages_for_truck(truck_2)
+truck_3.start_time = truck_1.finish_time
+truck_3_finish_time, truck_3.total_distance = deliver_packages_for_truck(truck_3)
+truck_total_miles = truck_1.total_distance + truck_2.total_distance + truck_3.total_distance
 print("total_miles ", truck_total_miles)
 user_input = ''
 while user_input != "3":
@@ -145,11 +145,11 @@ while user_input != "3":
     print("----------------------------------------------")
     print("THE WGUPS - PARCEL AND PACKAGE ROUTING SYSTEM.")
     print("----------------------------------------------")
-    print("Total Truck Distance:", truck_1.total_distance, truck_2.total_distance, truck_3.total_distance)
+    print("Total Truck Distance:", truck_total_miles)
     print("----------------------------------------------")
     print("Please select from the options below:")
     print("1. Get status for all packages for a particular time frame")
-    print("2. Get status single package for a particular time frame")
+    print("2. Get status single package.")
     print("3. Quit to exit the package query ")  # Get user input
 
     user_input = input("Enter your selection: ")
@@ -161,48 +161,52 @@ while user_input != "3":
             # Get the time frame from the user
             input_time = input("Enter a time (HH:MM:SS): ")
             (hrs, mins, secs) = input_time.split(":")
-            convert_user_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
+            convert_user_time = datetime.datetime(2022, 1, 1, int(hrs), int(mins), int(secs))
 
             # Complexity of this code is O(n^2)
             for package_id in range(1, 41):
-                try:
-                    first_time = hash_map1.get_value(str(package_id))  # [9]
-                    second_time = hash_map1.get_value(str(package_id))  # [10]
-                    (hrs, mins, secs) = first_time.split(":")
-                    convert_first_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
-                    (hrs, mins, secs) = second_time.split(":")
-                    convert_second_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
-                except ValueError:
-                    pass
-
-                # Determine which packages have left origin and are enroute to destination
-                if convert_first_time >= convert_user_time:
-                    hash_map1.get_value(str(package_id))[10] = "At origin"
-                    hash_map1.get_value(str(package_id))[9] = "leaving origin at: " + first_time
-
-                    # Print the current package details
-                    print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
-                          f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
-
-                # Determine which packages have left destination but have not yet been delivered
-                elif convert_second_time <= convert_user_time:
-                    if convert_user_time < convert_second_time:
-                        hash_map1.get_value(str(package_id))[10] = "In transit to destination"
-                        hash_map1.get_value(str(package_id))[9] = "left destination at: " + first_time
-
-                        # Print the current package details
-                        print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
-                              f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
-
-
-                # Determine which packages have been delivered
-                else:
-                    hash_map1.get_value(str(package_id))[10] = "Delivered at " + second_time
-                    hash_map1.get_value(str(package_id))[9] = "Left at : " + first_time
-
-                    # Print the current package details
-                    print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
-                          f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
+                package = hash_map1.package_find(package_id)
+                if package is not None:
+                    start_time = get_truck_for_package_id(package_id, truck_1, truck_2, truck_3).start_time
+                    print(package.print_package_status_for_time(convert_user_time, start_time))
+                # try:
+                #     first_time = hash_map1.get_value(str(package_id))  # [9]
+                #     second_time = hash_map1.get_value(str(package_id))  # [10]
+                #     (hrs, mins, secs) = first_time.split(":")
+                #     convert_first_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
+                #     (hrs, mins, secs) = second_time.split(":")
+                #     convert_second_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
+                # except ValueError:
+                #     pass
+                #
+                # # Determine which packages have left origin and are enroute to destination
+                # if convert_first_time >= convert_user_time:
+                #     hash_map1.get_value(str(package_id))[10] = "At origin"
+                #     hash_map1.get_value(str(package_id))[9] = "leaving origin at: " + first_time
+                #
+                #     # Print the current package details
+                #     print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
+                #           f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
+                #
+                # # Determine which packages have left destination but have not yet been delivered
+                # elif convert_second_time <= convert_user_time:
+                #     if convert_user_time < convert_second_time:
+                #         hash_map1.get_value(str(package_id))[10] = "In transit to destination"
+                #         hash_map1.get_value(str(package_id))[9] = "left destination at: " + first_time
+                #
+                #         # Print the current package details
+                #         print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
+                #               f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
+                #
+                #
+                # # Determine which packages have been delivered
+                # else:
+                #     hash_map1.get_value(str(package_id))[10] = "Delivered at " + second_time
+                #     hash_map1.get_value(str(package_id))[9] = "Left at : " + first_time
+                #
+                #     # Print the current package details
+                #     print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
+                #           f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
 
         except IndexError:
             print(IndexError)
@@ -218,12 +222,12 @@ while user_input != "3":
         try:
             # Get the time frame from the user
             package_id = input("Enter a package ID: ")
-            input_time = input("Enter a time (HH:MM:SS): ")
-            (hrs, mins, secs) = input_time.split(":")
-            convert_user_time = datetime.datetime(2022, 1, 1, int(hrs), int(mins), int(secs))
+            # input_time = input("Enter a time (HH:MM:SS): ")
+            # (hrs, mins, secs) = input_time.split(":")
+            # convert_user_time = datetime.datetime(2022, 1, 1, int(hrs), int(mins), int(secs))
             package_object = hash_map1.package_find(int(package_id))
-            package_truck = get_truck_for_package_id(int(package_id))
-            print(package_object.print_package_status_for_time(convert_user_time, package_truck.start_time))
+            if package_object is not None:
+                print(package_object)
 
         except ValueError as e:
             print('Invalid Entry', e)
