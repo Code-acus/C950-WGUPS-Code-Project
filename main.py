@@ -45,6 +45,7 @@ def deliver_packages_for_truck(truck):
     current_loc_index = 0
     current_time = truck.start_time
     print(truck.package_list)
+    # Package delivery loop
     while has_more_packages(truck):
         current_min_package = None
         current_min_dist = 100.0
@@ -74,12 +75,13 @@ def deliver_packages_for_truck(truck):
         # truck.package_list.pop(my_test_local_var)
         print("Delivered package", current_min_package.package_id, "at", current_time, current_min_dist,
               truck_distance)
-
+        truck.package_list.pop(truck.package_list.index(current_min_package.package_id))
         # current_dist = float(distance_table[current_loc_index][0])
         # truck_distance += current_dist
         # truck.total_distance += truck_distance
         # mins = (current_dist * 60) / 18.0
         # current_time = current_time + datetime.timedelta(minutes=mins)
+    #FIXME: Return truck to hub
     return current_time, truck_distance
 
 
@@ -128,14 +130,27 @@ truck1_list = [1, 2, 3, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 19, 20]
 truck2_list = [4, 5, 9, 27, 28, 29, 30,17, 18, 21, 22, 23, 24, 25, 26]
 truck3_list = [31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
 
+
 truck_1 = Truck(1, truck1_list, 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
 truck_2 = Truck(2, truck2_list, 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
 truck_3 = Truck(3, truck3_list, 18)
 
+for package_id in truck_1.package_list:
+    package = hash_map1.package_find(package_id)
+    package.load_time = truck_1.start_time
 truck_1.finish_time, truck_1.total_distance = deliver_packages_for_truck(truck_1)
+
+for package_id in truck_2.package_list:
+    package = hash_map1.package_find(package_id)
+    package.load_time = truck_2.start_time
 truck_2.finish_time, truck_2.total_distance = deliver_packages_for_truck(truck_2)
+
 truck_3.start_time = truck_1.finish_time
+for package_id in truck_3.package_list:
+    package = hash_map1.package_find(package_id)
+    package.load_time = truck_3.start_time
 truck_3_finish_time, truck_3.total_distance = deliver_packages_for_truck(truck_3)
+
 truck_total_miles = truck_1.total_distance + truck_2.total_distance + truck_3.total_distance
 print("total_miles ", truck_total_miles)
 user_input = ''
@@ -167,8 +182,11 @@ while user_input != "3":
             for package_id in range(1, 41):
                 package = hash_map1.package_find(package_id)
                 if package is not None:
-                    start_time = get_truck_for_package_id(package_id, truck_1, truck_2, truck_3).start_time
-                    print(package.print_package_status_for_time(convert_user_time, start_time))
+                    # start_time = get_truck_for_package_id(package_id, truck_1, truck_2, truck_3).start_time
+                    # print(package.print_package_status_for_time(convert_user_time, start_time))
+                    # FIXME: Chomp in python
+                    print(package)
+                    # Write if else statement to check print status
                 # try:
                 #     first_time = hash_map1.get_value(str(package_id))  # [9]
                 #     second_time = hash_map1.get_value(str(package_id))  # [10]

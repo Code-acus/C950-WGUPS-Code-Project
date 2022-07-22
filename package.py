@@ -5,13 +5,11 @@ class Package:
         self.package_id = package_id
         self.address = address
         self.delivery_time = None
-        self.loading_time = None
-        self.earliest_loading_time = datetime.time(8, 0, 0)
+        self.loading_time = datetime.time(8, 0, 0)
         self.mileage = 0
 
     def __str__(self):
-        return f'{self.package_id} {self.address} {self.delivery_time} {self.loading_time} ' \
-               f'{self.earliest_loading_time} {self.mileage}'
+        return f'{self.package_id}\t {self.address}\t {self.loading_time}\t {self.delivery_time.time()}'
 
     def is_delivered(self):
         return self.delivery_time is not None
