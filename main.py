@@ -21,7 +21,7 @@ with open('./data/distance_data.csv') as csv_file_1:
     distance_csv = list(csv.reader(csv_file_1, delimiter=','))
     for row in distance_csv:
         distance_table.append(row)
-        # print(row)
+
 
 address_dict = {}
 with open('./data/distance_name_data.csv') as csv_file_2:
@@ -29,8 +29,6 @@ with open('./data/distance_name_data.csv') as csv_file_2:
     for row in distance_name_csv:
         address_dict[row[1]] = int(row[0])
 
-
-# print(address_dict)
 
 def has_more_packages(truck):
     for package_id in truck.package_list:
@@ -54,34 +52,31 @@ def deliver_packages_for_truck(truck):
             if package.is_not_delivered():
 
                 package_loc_index = address_dict[package.address]
-                # print(package_id, current_loc_index, package_loc_index)
                 if current_loc_index > package_loc_index:
                     current_dist = float(distance_table[current_loc_index][package_loc_index])
                 else:
                     current_dist = float(distance_table[package_loc_index][current_loc_index])
-                    # Checking if current distance is less than min distance
                 if current_dist < current_min_dist:
                     current_min_dist = current_dist
                     current_min_package = package
 
-        # if current_min_package is not None:
         mins = (current_min_dist * 60) / 18.0
         current_time = current_time + datetime.timedelta(minutes=mins)
         current_min_package.delivery_time = current_time
         current_loc_index = package_loc_index
         truck_distance += current_min_dist
-        # print('**', current_loc_index, package_loc_index, truck.package_list.index(current_min_package.package_id))
-        # my_test_local_var = truck.package_list.index(current_min_package.package_id)
-        # truck.package_list.pop(my_test_local_var)
         print("Delivered package", current_min_package.package_id, "at", current_time, current_min_dist,
               truck_distance)
         truck.package_list.pop(truck.package_list.index(current_min_package.package_id))
-        # current_dist = float(distance_table[current_loc_index][0])
-        # truck_distance += current_dist
-        # truck.total_distance += truck_distance
-        # mins = (current_dist * 60) / 18.0
-        # current_time = current_time + datetime.timedelta(minutes=mins)
-    #FIXME: Return truck to hub
+
+    #FIXME: Return truck to hub (NOW the code is broken)
+    while truck_distance > 0.0:
+        current_dist = get_mileage_for_address(truck.address, "Hub")
+        if current_dist > truck_distance:
+            current_dist = truck_distance
+        truck_distance -= current_dist
+        current_time = current_time + datetime.timedelta(minutes=current_dist * 60 / 18.0)
+        print("Returned to hub at", current_time, current_dist)
     return current_time, truck_distance
 
 
@@ -155,7 +150,6 @@ truck_total_miles = truck_1.total_distance + truck_2.total_distance + truck_3.to
 print("total_miles ", truck_total_miles)
 user_input = ''
 while user_input != "3":
-    # global convert_first_time, convert_second_time, first_time, second_time
     # Displays interface for users to select options for packages and trucks
     print("----------------------------------------------")
     print("THE WGUPS - PARCEL AND PACKAGE ROUTING SYSTEM.")
@@ -169,8 +163,6 @@ while user_input != "3":
 
     user_input = input("Enter your selection: ")
 
-    # Case of user selects option 1
-    # Get details for all packages at a particular time frame
     if user_input == "1":
         try:
             # Get the time frame from the user
@@ -182,49 +174,9 @@ while user_input != "3":
             for package_id in range(1, 41):
                 package = hash_map1.package_find(package_id)
                 if package is not None:
-                    # start_time = get_truck_for_package_id(package_id, truck_1, truck_2, truck_3).start_time
-                    # print(package.print_package_status_for_time(convert_user_time, start_time))
-                    # FIXME: Chomp in python
+                    # FIXME: chomp() equivalent in python
                     print(package)
-                    # Write if else statement to check print status
-                # try:
-                #     first_time = hash_map1.get_value(str(package_id))  # [9]
-                #     second_time = hash_map1.get_value(str(package_id))  # [10]
-                #     (hrs, mins, secs) = first_time.split(":")
-                #     convert_first_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
-                #     (hrs, mins, secs) = second_time.split(":")
-                #     convert_second_time = datetime.timedelta(hours=int(hrs), minutes=int(mins), seconds=int(secs))
-                # except ValueError:
-                #     pass
-                #
-                # # Determine which packages have left origin and are enroute to destination
-                # if convert_first_time >= convert_user_time:
-                #     hash_map1.get_value(str(package_id))[10] = "At origin"
-                #     hash_map1.get_value(str(package_id))[9] = "leaving origin at: " + first_time
-                #
-                #     # Print the current package details
-                #     print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
-                #           f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
-                #
-                # # Determine which packages have left destination but have not yet been delivered
-                # elif convert_second_time <= convert_user_time:
-                #     if convert_user_time < convert_second_time:
-                #         hash_map1.get_value(str(package_id))[10] = "In transit to destination"
-                #         hash_map1.get_value(str(package_id))[9] = "left destination at: " + first_time
-                #
-                #         # Print the current package details
-                #         print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
-                #               f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
-                #
-                #
-                # # Determine which packages have been delivered
-                # else:
-                #     hash_map1.get_value(str(package_id))[10] = "Delivered at " + second_time
-                #     hash_map1.get_value(str(package_id))[9] = "Left at : " + first_time
-                #
-                #     # Print the current package details
-                #     print(f'Package ID: {hash_map1.get_value(str(package_id))[0]}, '
-                #           f'Package Delivery Status: {hash_map1.get_value(str(package_id))[10]}')
+                    # FIXME: Write if else statement to check print status
 
         except IndexError:
             print(IndexError)
