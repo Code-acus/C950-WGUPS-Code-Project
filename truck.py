@@ -6,3 +6,4 @@ class Truck:
         self.truck_speed = truck_speed
         self.start_time = start_time
         self.total_distance = 0
+        self.finish_time = None
