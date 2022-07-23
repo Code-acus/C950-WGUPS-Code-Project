@@ -34,6 +34,5 @@ class Package:
         elif requested_time > self.delivery_time:
             status = "delivered"
 
-        return f'{self.package_id} {self.address} {self.delivery_time} {self.loading_time} ' \
-               f'{self.earliest_loading_time} {self.mileage} {status}'
+        return f'{self.package_id}\t {self.address}\t {self.delivery_time}\t {self.mileage}\t {status}'
 

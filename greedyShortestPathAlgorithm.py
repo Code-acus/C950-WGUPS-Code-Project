@@ -2,7 +2,7 @@
 import csv
 import datetime
 
-# Read the CSV files for the packages and the delivery status
+
 with open('./data/distance_data.csv') as csv_file_1:
     distance_csv = list(csv.reader(csv_file_1, delimiter=','))
 with open('./data/distance_name_data.csv') as csv_file_2:
@@ -42,7 +42,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
                                         minutes=int(mins), seconds=int(secs))
         return total
 
-    # these lists represent the sorted trucks that are put in order of efficiency in the function below
+
     first_delivery_truck = []
     first_delivery_truck_indices = []
     second_delivery_truck = []
