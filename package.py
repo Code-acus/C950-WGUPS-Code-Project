@@ -1,5 +1,6 @@
 import datetime
 
+
 class Package:
     def __init__(self, package_id, address):
         self.package_id = package_id
@@ -21,7 +22,6 @@ class Package:
         self.delivery_time = delivery_time
         self.mileage = mileage
 
-
     def print_package_status_for_time(self, requested_time, start_time):
         status = "enroute"
 
@@ -35,4 +35,3 @@ class Package:
             status = "delivered"
 
         return f'{self.package_id}\t {self.address}\t {self.delivery_time}\t {self.mileage}\t {status}'
-

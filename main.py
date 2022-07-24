@@ -8,27 +8,6 @@ from truck import Truck
 
 hash_map1 = HashTable()
 
-with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
-    read_in_csv = csv.reader(csv_file_1, delimiter=',')
-    for row in read_in_csv:
-        package_id = int(row[0])
-        address = row[1]
-        pkg = Package(package_id, address)
-        hash_map1.package_insert(pkg)
-
-distance_table = []
-with open('./data/distance_data.csv') as csv_file_1:
-    distance_csv = list(csv.reader(csv_file_1, delimiter=','))
-    for row in distance_csv:
-        distance_table.append(row)
-
-
-address_dict = {}
-with open('./data/distance_name_data.csv') as csv_file_2:
-    distance_name_csv = list(csv.reader(csv_file_2, delimiter=','))
-    for row in distance_name_csv:
-        address_dict[row[1]] = int(row[0])
-
 
 def has_more_packages(truck):
     for package_id in truck.package_list:
@@ -41,7 +20,6 @@ def has_more_packages(truck):
 def deliver_packages_for_truck(truck):
     truck_distance = 0.0
     current_loc_index = 0
-    # current_min_package = None
     current_time = truck.start_time
     print(truck.package_list)
     # Package delivery loop
@@ -67,7 +45,6 @@ def deliver_packages_for_truck(truck):
         current_min_package.mileage = current_min_dist
         current_loc_index = package_loc_index
         truck_distance += current_min_dist
-
 
     truck_distance += float(distance_table[current_loc_index][0])
     return current_time, truck_distance
@@ -112,11 +89,30 @@ def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=Non
         return truck_3
 
 
+with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
+    read_in_csv = csv.reader(csv_file_1, delimiter=',')
+    for row in read_in_csv:
+        package_id = int(row[0])
+        address = row[1]
+        pkg = Package(package_id, address)
+        hash_map1.package_insert(pkg)
+
+distance_table = []
+with open('./data/distance_data.csv') as csv_file_1:
+    distance_csv = list(csv.reader(csv_file_1, delimiter=','))
+    for row in distance_csv:
+        distance_table.append(row)
+
+address_dict = {}
+with open('./data/distance_name_data.csv') as csv_file_2:
+    distance_name_csv = list(csv.reader(csv_file_2, delimiter=','))
+    for row in distance_name_csv:
+        address_dict[row[1]] = int(row[0])
+
 # Main run:
 truck1_list = [1, 2, 3, 6, 7, 8, 10, 11, 12, 18, 21, 22, 23, 24, 25, 26]
 truck2_list = [4, 5, 13, 14, 15, 16, 17, 19, 20, 27, 28, 29, 30]
 truck3_list = [9, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
-
 
 truck_1 = Truck(1, truck1_list, 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
 truck_2 = Truck(2, truck2_list, 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
@@ -137,7 +133,6 @@ if truck_1.finish_time > truck_3_delayed_start:
     truck_3.start_time = truck_1.finish_time
 else:
     truck_3.start_time = truck_3_delayed_start
-
 
 print(truck_3.start_time)
 for package_id in truck_3.package_list:
@@ -190,4 +185,3 @@ while user_input != "3":
         except ValueError as e:
             print('Invalid Entry', e)
             exit()
-
