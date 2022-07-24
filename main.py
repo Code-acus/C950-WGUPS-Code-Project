@@ -163,6 +163,7 @@ while user_input != "3":
             convert_user_time = datetime.datetime(2022, 1, 1, int(hrs), int(mins), int(secs))
 
             # Complexity of this code is O(n^2)
+            print("Package ID\t Address\t\t Loading Time\t Delivery Time")
             for package_id in range(1, 41):
                 package = hash_map1.package_find(package_id)
                 if package is not None:

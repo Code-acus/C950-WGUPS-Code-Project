@@ -6,7 +6,7 @@ class HashTable:
         for i in range(10):
             self.hashtable.append([])
 
-    # Create a hash key which should run in O(1)
+    # Create a hash key which runs in O(1)
     def get_hash_value(self, key):
         return int(key) % 10
 
@@ -37,7 +37,7 @@ class HashTable:
         return ret_str
 
     def __repr__(self):
-        bucket_num = 0
+        bucket_num: int = 0
         ret_str = ""
         for bucket in self.hashtable:
             ret_str = ret_str + str(bucket_num) + "\n"
