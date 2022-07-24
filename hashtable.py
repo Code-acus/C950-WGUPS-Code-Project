@@ -6,7 +6,7 @@ class HashTable:
         for i in range(10):
             self.hashtable.append([])
 
-    # Create a hash key which runs in O(1)
+    # Create a hash key which run\\\\\ in O(1)
     def get_hash_value(self, key):
         return int(key) % 10
 
