@@ -6,9 +6,11 @@ from hashtable import HashTable
 from package import Package
 from truck import Truck
 
+# Assign the HashTable to a variable called hash_map1
 hash_map1 = HashTable()
 
-
+# Passing a truck object to this function will determine if the truck has more packages to deliver
+# Runs in O(n) time
 def has_more_packages(truck):
     for package_id in truck.package_list:
         package = hash_map1.package_find(package_id)
@@ -16,7 +18,9 @@ def has_more_packages(truck):
             return True
     return False
 
-
+# Assigns a package and delivery distance to a truc
+# Determines if the package can be delivered in the time allotted and updates the package status
+# Runs O(n^2) time
 def deliver_packages_for_truck(truck):
     truck_distance = 0.0
     current_loc_index = 0
@@ -50,6 +54,7 @@ def deliver_packages_for_truck(truck):
     return current_time, truck_distance
 
 
+# Defines a method to get the index of an address in the distance table
 def get_index_for_address(address):
     pass
     for address_entry in address_dict:
@@ -57,7 +62,7 @@ def get_index_for_address(address):
             return int(address_entry[0])
     return -1
 
-
+# Defines a method to get the mileage of next package for a truck
 def get_mileage_for_address(starting_address, ending_address):
     start_index = get_index_for_address(starting_address)
     end_index = get_index_for_address(ending_address)
@@ -72,6 +77,7 @@ def get_mileage_for_address(starting_address, ending_address):
     return -1.0
 
 
+# Defines a method to get the delivery status of a package
 def get_delivery_status(package_id):
     package = hash_map1.package_find(package_id)
     if package is None:
@@ -79,7 +85,7 @@ def get_delivery_status(package_id):
     else:
         return package.delivery_status
 
-
+# Defines a method to determine which truck is assigned packages
 def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=None):
     if package_id in truck_1.package_list:
         return truck_1
@@ -88,7 +94,7 @@ def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=Non
     if package_id in truck_3.package_list:
         return truck_3
 
-
+# Opens the CSV file and creates a list of lists
 with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
     read_in_csv = csv.reader(csv_file_1, delimiter=',')
     for row in read_in_csv:
@@ -97,12 +103,14 @@ with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
         pkg = Package(package_id, address)
         hash_map1.package_insert(pkg)
 
+# Opens the CSV file and builds the data into a list
 distance_table = []
 with open('./data/distance_data.csv') as csv_file_1:
     distance_csv = list(csv.reader(csv_file_1, delimiter=','))
     for row in distance_csv:
         distance_table.append(row)
 
+# Opens the CSV file and builds a dictionary
 address_dict = {}
 with open('./data/distance_name_data.csv') as csv_file_2:
     distance_name_csv = list(csv.reader(csv_file_2, delimiter=','))
@@ -143,6 +151,8 @@ truck_3_finish_time, truck_3.total_distance = deliver_packages_for_truck(truck_3
 truck_total_miles = truck_1.total_distance + truck_2.total_distance + truck_3.total_distance
 print("total_miles ", truck_total_miles)
 user_input = ''
+
+# This is the display message that is shown when the user runs the program. The interface is accessible from here
 while user_input != "3":
     print("----------------------------------------------")
     print("THE WGUPS - PARCEL AND PACKAGE ROUTING SYSTEM.")
@@ -155,15 +165,18 @@ while user_input != "3":
     print("3. Quit to exit the package query ")  # Get user input
 
     user_input = input("Enter your selection: ")
-
+    # Case if user selects Option #1
+    # Get info for all packages at a particular time
+    # Runs in O(n^2) time
     if user_input == "1":
         try:
             input_time = input("Enter a time (HH:MM:SS): ")
             (hrs, mins, secs) = input_time.split(":")
             convert_user_time = datetime.datetime(2022, 1, 1, int(hrs), int(mins), int(secs))
-
-            # Complexity of this code is O(n^2)
             print("Package ID\t Address\t\t Loading Time\t Delivery Time")
+
+            # Runs in loop through all packages
+            # Checks if the package is loaded at the time the user entered
             for package_id in range(1, 41):
                 package = hash_map1.package_find(package_id)
                 if package is not None:
@@ -174,8 +187,6 @@ while user_input != "3":
             print(IndexError)
             exit()
 
-
-    # Get details for a single package at a particular time frame which should run in O(n)
     elif user_input == "2":
         try:
             package_id = input("Enter a package ID: ")
