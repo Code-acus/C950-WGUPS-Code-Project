@@ -158,8 +158,10 @@ if truck_1.finish_time > truck_3_delayed_start:
     truck_3.start_time = truck_1.finish_time
 else:
     truck_3.start_time = truck_3_delayed_start
-
 print(truck_3.start_time)
+
+# # Calculate total distance of the third truck and distance of each package -> O(n)
+# Runs in O(1)
 for package_id in truck_3.package_list:
     package = hash_map1.package_find(package_id)
     package.load_time = truck_3.start_time
