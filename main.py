@@ -20,7 +20,7 @@ def has_more_packages(truck):
     return False
 
 
-# Assigns a package and delivery distance to a truc
+# Assigns a package and delivery distance to a truck
 # Determines if the package can be delivered in the time allotted and updates the package status
 def deliver_packages_for_truck(truck):
     truck_distance = 0.0
@@ -66,7 +66,8 @@ def get_index_for_address(address):
     return -1
 
 
-# Defines a method to get the mileage of next package for a truck
+# Defines a method to get the mileage of next package for a truck and compares and
+# Compares starting index to address list
 def get_mileage_for_address(starting_address, ending_address):
     start_index = get_index_for_address(starting_address)
     end_index = get_index_for_address(ending_address)
@@ -91,7 +92,7 @@ def get_delivery_status(package_id):
         return package.delivery_status
 
 
-# Defines a method to determine which truck is assigned packages
+# Defines a method to determine which truck is assigned packages to deliver
 # Runs in O(n) time
 def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=None):
     if package_id in truck_1.package_list:
@@ -105,7 +106,7 @@ def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=Non
 # Opens the CSV file and creates a list of lists
 with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
     read_in_csv = csv.reader(csv_file_1, delimiter=',')
-    # Runs in O(1) time
+    # Runs in O(n) time
     for row in read_in_csv:
         package_id = int(row[0])
         address = row[1]
@@ -137,6 +138,8 @@ truck_1 = Truck(1, truck1_list, 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
 truck_2 = Truck(2, truck2_list, 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
 truck_3 = Truck(3, truck3_list, 18)
 
+# Set load time to truck start times
+# Runs in O(n) time
 for package_id in truck_1.package_list:
     package = hash_map1.package_find(package_id)
     package.load_time = truck_1.start_time
@@ -147,6 +150,9 @@ for package_id in truck_2.package_list:
     package.load_time = truck_2.start_time
 truck_2.finish_time, truck_2.total_distance = deliver_packages_for_truck(truck_2)
 
+# Sets the truck 3 delayed time to the final delivery time as long as the first truck is finished delivering
+# Otherwise, it sets the truck 3 start time to the delayed delivery time
+# Runs in O(n) time
 truck_3_delayed_start = datetime.datetime(2022, 1, 1, 10, 20, 0)
 if truck_1.finish_time > truck_3_delayed_start:
     truck_3.start_time = truck_1.finish_time
