@@ -9,18 +9,19 @@ from truck import Truck
 # Assign the HashTable to a variable called hash_map1
 hash_map1 = HashTable()
 
+
 # Passing a truck object to this function will determine if the truck has more packages to deliver
-# Runs in O(n) time
 def has_more_packages(truck):
     for package_id in truck.package_list:
         package = hash_map1.package_find(package_id)
+        # Runs in O(n) time
         if package.is_not_delivered():
             return True
     return False
 
+
 # Assigns a package and delivery distance to a truc
 # Determines if the package can be delivered in the time allotted and updates the package status
-# Runs O(n^2) time
 def deliver_packages_for_truck(truck):
     truck_distance = 0.0
     current_loc_index = 0
@@ -30,10 +31,11 @@ def deliver_packages_for_truck(truck):
     while has_more_packages(truck):
         current_min_package = None
         current_min_dist = 100.0
+        # Runs in O(n) time
         for package_id in truck.package_list:
             package = hash_map1.package_find(package_id)
+            # Runs in O(n^2) time
             if package.is_not_delivered():
-
                 package_loc_index = address_dict[package.address]
                 if current_loc_index > package_loc_index:
                     current_dist = float(distance_table[current_loc_index][package_loc_index])
@@ -58,15 +60,17 @@ def deliver_packages_for_truck(truck):
 def get_index_for_address(address):
     pass
     for address_entry in address_dict:
+        # Runs in O(n) time
         if address == address_entry[2]:
             return int(address_entry[0])
     return -1
+
 
 # Defines a method to get the mileage of next package for a truck
 def get_mileage_for_address(starting_address, ending_address):
     start_index = get_index_for_address(starting_address)
     end_index = get_index_for_address(ending_address)
-
+    # Runs in O(n^2) time
     if start_index != -1 and end_index != -1:
         if start_index > end_index:
             return float(distance_table[start_index][end_index])
@@ -80,12 +84,15 @@ def get_mileage_for_address(starting_address, ending_address):
 # Defines a method to get the delivery status of a package
 def get_delivery_status(package_id):
     package = hash_map1.package_find(package_id)
+    # Runs in O(n) time
     if package is None:
         return "Package not found"
     else:
         return package.delivery_status
 
+
 # Defines a method to determine which truck is assigned packages
+# Runs in O(n) time
 def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=None):
     if package_id in truck_1.package_list:
         return truck_1
@@ -94,9 +101,11 @@ def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=Non
     if package_id in truck_3.package_list:
         return truck_3
 
+
 # Opens the CSV file and creates a list of lists
 with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
     read_in_csv = csv.reader(csv_file_1, delimiter=',')
+    # Runs in O(1) time
     for row in read_in_csv:
         package_id = int(row[0])
         address = row[1]
@@ -107,6 +116,7 @@ with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
 distance_table = []
 with open('./data/distance_data.csv') as csv_file_1:
     distance_csv = list(csv.reader(csv_file_1, delimiter=','))
+    # Runs in O(n) time
     for row in distance_csv:
         distance_table.append(row)
 
@@ -114,6 +124,7 @@ with open('./data/distance_data.csv') as csv_file_1:
 address_dict = {}
 with open('./data/distance_name_data.csv') as csv_file_2:
     distance_name_csv = list(csv.reader(csv_file_2, delimiter=','))
+    # Runs in O(n) time
     for row in distance_name_csv:
         address_dict[row[1]] = int(row[0])
 
@@ -187,6 +198,8 @@ while user_input != "3":
             print(IndexError)
             exit()
 
+    # Case if user selects Option #2
+    # Runs in O(n) time
     elif user_input == "2":
         try:
             package_id = input("Enter a package ID: ")
