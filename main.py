@@ -160,13 +160,15 @@ else:
     truck_3.start_time = truck_3_delayed_start
 print(truck_3.start_time)
 
-# # Calculate total distance of the third truck and distance of each package -> O(n)
-# Runs in O(1)
+# # Calculate total distance of the third truck and distance of remaining packages
+# # Runs in O(n )
 for package_id in truck_3.package_list:
     package = hash_map1.package_find(package_id)
     package.load_time = truck_3.start_time
 truck_3_finish_time, truck_3.total_distance = deliver_packages_for_truck(truck_3)
 
+# Get distance of all packages
+# Runs in O(1) time
 truck_total_miles = truck_1.total_distance + truck_2.total_distance + truck_3.total_distance
 print("total_miles ", truck_total_miles)
 user_input = ''
