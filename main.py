@@ -22,6 +22,8 @@ def has_more_packages(truck):
 
 # Assigns a package and delivery distance to a truck
 # Determines if the package can be delivered in the time allotted and updates the package status
+# Nearest neighbor algorithm
+# Runs overall in O(n^2) time
 def deliver_packages_for_truck(truck):
     truck_distance = 0.0
     current_loc_index = 0
@@ -29,7 +31,7 @@ def deliver_packages_for_truck(truck):
     print(truck.package_list)
     # Package delivery loop
     while has_more_packages(truck):
-        current_min_package = None
+        current_min_package = None 
         current_min_dist = 100.0
         # Runs in O(n) time
         for package_id in truck.package_list:
