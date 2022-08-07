@@ -78,47 +78,47 @@ with open('./data/distance_name_data.csv') as csv_file_2:
 
     # Space-Time Complexity runs in O(n^2) time
 
-# FIXME: This is a very inefficient algorithm.
-    # def get_shortest_path(_list, num, curr_location):
-    #     if not len(_list):
-    #         return _list
-    #
-    #     find_lowest_value = 50.0
-    #     location = 0
-    #
-    #     for i in _list:
-    #         value = int(i[1])
-    #         if get_current_package_distance(curr_location, value) <= find_lowest_value:
-    #             find_lowest_value = get_current_package_distance(
-    #                 curr_location, value)
-    #             location = value
-    #
-    #     for i in _list:
-    #         if get_current_package_distance(curr_location, int(i[1])) == find_lowest_value:
-    #             if num == 1:
-    #                 first_delivery_truck.append(i)
-    #                 first_delivery_truck_indices.append(i[1])
-    #                 _list.pop(_list.index(i))
-    #                 curr_location = location
-    #                 get_shortest_path(_list, 1, curr_location)
-    #             elif num == 2:
-    #                 second_delivery_truck.append(i)
-    #                 second_delivery_truck_indices.append(i[1])
-    #                 _list.pop(_list.index(i))
-    #                 curr_location = location
-    #                 get_shortest_path(_list, 2, curr_location)
-    #             elif num == 3:
-    #                 final_delivery_truck.append(i)
-    #                 final_delivery_truck_indices.append(i[1])
-    #                 _list.pop(_list.index(i))
-    #                 curr_location = location
-    #                 get_shortest_path(_list, 3, curr_location)
-    #
-    # # Insert 0 for the first index of each index list
-    # first_delivery_truck_indices.insert(0, '0')
-    # second_delivery_truck_indices.insert(0, '0')
-    # final_delivery_truck_indices.insert(0, '0')
-# FIXME: This is a very inefficient algorithm.
+
+    def get_shortest_path(_list, num, curr_location):
+        if not len(_list):
+            return _list
+
+        find_lowest_value = 50.0
+        location = 0
+
+        for i in _list:
+            value = int(i[1])
+            if get_current_package_distance(curr_location, value) <= find_lowest_value:
+                find_lowest_value = get_current_package_distance(
+                    curr_location, value)
+                location = value
+
+        for i in _list:
+            if get_current_package_distance(curr_location, int(i[1])) == find_lowest_value:
+                if num == 1:
+                    first_delivery_truck.append(i)
+                    first_delivery_truck_indices.append(i[1])
+                    _list.pop(_list.index(i))
+                    curr_location = location
+                    get_shortest_path(_list, 1, curr_location)
+                elif num == 2:
+                    second_delivery_truck.append(i)
+                    second_delivery_truck_indices.append(i[1])
+                    _list.pop(_list.index(i))
+                    curr_location = location
+                    get_shortest_path(_list, 2, curr_location)
+                elif num == 3:
+                    final_delivery_truck.append(i)
+                    final_delivery_truck_indices.append(i[1])
+                    _list.pop(_list.index(i))
+                    curr_location = location
+                    get_shortest_path(_list, 3, curr_location)
+
+    # Insert 0 for the first index of each index list
+    first_delivery_truck_indices.insert(0, '0')
+    second_delivery_truck_indices.insert(0, '0')
+    final_delivery_truck_indices.insert(0, '0')
+
     # The following are all helper functions to return a desired value -> O(1)
     def first_delivery_truck_index():
         return first_delivery_truck_indices
