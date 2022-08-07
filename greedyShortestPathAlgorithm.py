@@ -92,7 +92,7 @@ with open('./data/distance_name_data.csv') as csv_file_2:
     #             find_lowest_value = get_current_package_distance(
     #                 curr_location, value)
     #             location = value
-    # 
+    #
     #     for i in _list:
     #         if get_current_package_distance(curr_location, int(i[1])) == find_lowest_value:
     #             if num == 1:
