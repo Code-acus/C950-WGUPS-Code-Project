@@ -23,13 +23,13 @@ class Package:
         self.mileage = mileage
 
     def print_package_status_for_time(self, requested_time, start_time):
-        status = "enroute"
+        status = "en route"
 
         if requested_time < start_time:
             status = "at hub"
 
         elif self.delivery_time is None or self.loading_time == start_time:
-            status = "enroute"
+            status = "en route"
 
         elif requested_time > self.delivery_time:
             status = "delivered"
