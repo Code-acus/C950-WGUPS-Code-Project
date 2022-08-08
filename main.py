@@ -83,7 +83,6 @@ def get_mileage_for_address(starting_address, ending_address):
         print("Bad address", starting_address, ending_address)
     return -1.0
 
-
 # Defines a method to get the delivery status of a package
 def get_delivery_status(package_id):
     package = hash_map1.package_find(package_id)
@@ -92,7 +91,6 @@ def get_delivery_status(package_id):
         return "Package not found"
     else:
         return package.delivery_status
-
 
 # Defines a method to determine which truck is assigned packages to deliver
 # Runs in O(n) time
@@ -103,7 +101,6 @@ def get_truck_for_package_id(package_id, truck_1=None, truck_2=None, truck_3=Non
         return truck_2
     if package_id in truck_3.package_list:
         return truck_3
-
 
 # Opens the CSV file and creates a list of lists
 with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:

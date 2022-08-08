@@ -15,6 +15,7 @@ class HashTable:
        key_hash = self.get_hash_value(new_package_insert.package_id)
        self.hashtable[key_hash].append([new_package_insert.package_id, new_package_insert])
 
+    # Find package in hash table
     def package_find(self, key):
         key_hash = self.get_hash_value(key)
         for p in self.hashtable[key_hash]:
@@ -22,9 +23,11 @@ class HashTable:
                 return p[1]
         return None
 
+    # Get key value for package
     def get_value(self, key):
         return self.package_find(key)
 
+    # Get the index of the address
     def __str__(self):
         bucket_num = 0
         ret_str = ""
@@ -36,6 +39,7 @@ class HashTable:
             bucket_num += 1
         return ret_str
 
+    # Method to get the viewable index of the address
     def __repr__(self):
         bucket_num: int = 0
         ret_str = ""
