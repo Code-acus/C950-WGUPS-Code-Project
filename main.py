@@ -23,7 +23,7 @@ def has_more_packages(truck):
 # Assigns a package and delivery distance to a truck
 # Determines if the package can be delivered in the time allotted and updates the package status
 # Nearest neighbor algorithm
-# Runs overall in O(n^2) time
+# Runs overall no worse than O(n^3) time
 def deliver_packages_for_truck(truck):
     truck_distance = 0.0
     current_loc_index = 0
@@ -187,7 +187,7 @@ while user_input != "3":
     user_input = input("Enter your selection: ")
     # Case if user selects Option #1
     # Get info for all packages at a particular time
-    # Runs in O(n^2) time
+    # Runs no slower than O(n^2) time
     if user_input == "1":
         try:
             input_time = input("Enter a time (HH:MM:SS): ")
