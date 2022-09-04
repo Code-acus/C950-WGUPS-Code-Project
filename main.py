@@ -194,6 +194,7 @@ while user_input != "3":
     # Case if user selects Option #1
     # Get info for all packages at a particular time
     # Runs no slower than O(n^2) time
+    #
     if user_input == "1":
         try:
             input_time = input("Enter a time (HH:MM:SS): ")
