@@ -135,9 +135,9 @@ with open('./data/distance_name_data.csv') as csv_file_2:
         address_dict[row[1]] = int(row[0])
 
 # Main run:
-truck1_list = [1, 2, 6, 7, 8, 10, 11, 12, 17, 21, 22, 23, 24, 25, 26]
-truck2_list = [3, 4, 5, 13, 14, 15, 16, 18, 19, 20, 27, 28, 29, 30, 36, 38]
-truck3_list = [9, 31, 32, 33, 34, 35, 37, 39, 40]
+truck1_list = [1, 6, 11, 12, 13, 14, 15, 17, 19, 21, 25, 26, 31, 34, 37]
+truck2_list = [3, 4, 5, 16, 18, 20, 27, 28, 29, 30, 36, 38]
+truck3_list = [2, 7, 8, 9, 10, 22, 23, 24, 32, 33, 35, 39, 40]
 
 truck_1 = Truck(1, truck1_list, 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
 truck_2 = Truck(2, truck2_list, 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
@@ -199,7 +199,7 @@ while user_input != "3":
             input_time = input("Enter a time (HH:MM:SS): ")
             (hrs, mins, secs) = input_time.split(":")
             convert_user_time = datetime.datetime(2022, 1, 1, int(hrs), int(mins), int(secs))
-            print("Package ID\t Address\t\t Loading Time\t Delivery Time")
+            print("Package ID\t\t Address\t\t\t\t\t\t\t\t Loading Time\t\t Delivery Time")
 
             # Runs in loop through all packages
             # Checks if the package is loaded at the time the user entered
