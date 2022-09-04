@@ -109,7 +109,13 @@ with open('./data/input_data.csv', encoding='utf-8-sig') as csv_file_1:
     for row in read_in_csv:
         package_id = int(row[0])
         address = row[1]
-        pkg = Package(package_id, address)
+        city = row[2]
+        state = row[3]
+        zip_code = row[4]
+        deadline = row[5]
+        weight = row[6]
+        notes = row[7]
+        pkg = Package(package_id, address, city, state, zip_code, deadline, weight, notes)
         hash_map1.package_insert(pkg)
 
 # Opens the CSV file and builds the data into a list
@@ -129,9 +135,9 @@ with open('./data/distance_name_data.csv') as csv_file_2:
         address_dict[row[1]] = int(row[0])
 
 # Main run:
-truck1_list = [1, 2, 3, 6, 7, 8, 10, 11, 12, 18, 21, 22, 23, 24, 25, 26]
-truck2_list = [4, 5, 13, 14, 15, 16, 17, 19, 20, 27, 28, 29, 30]
-truck3_list = [9, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]
+truck1_list = [1, 2, 6, 7, 8, 10, 11, 12, 17, 21, 22, 23, 24, 25, 26]
+truck2_list = [3, 4, 5, 13, 14, 15, 16, 18, 19, 20, 27, 28, 29, 30, 36, 38]
+truck3_list = [9, 31, 32, 33, 34, 35, 37, 39, 40]
 
 truck_1 = Truck(1, truck1_list, 18, datetime.datetime(2022, 1, 1, 8, 0, 0))
 truck_2 = Truck(2, truck2_list, 18, datetime.datetime(2022, 1, 1, 9, 0, 5))
